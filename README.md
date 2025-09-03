@@ -15,3 +15,7 @@ Diante desse cenário, a implementação de um Sistema de Gerenciamento de Opera
 ## - [2. Descrição](#2-descrição)
   - [2.1. Requisitos.](#21-requisitos)
 >> Colocar aqui a lista acima!
+
+<!-- 
+    
+-->
