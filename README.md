@@ -239,9 +239,7 @@ Diagrama Completo: Combine todas as classes e relacionamentos em um único diagr
 -->
 
 classDiagram
-%% =========================
-%% SGOM - Diagrama de Classe (Mermaid)
-%% =========================
+%% SGOM - Diagrama de Classe (com base na Descrição_Empresa)
 
 class Empresa {
   +int id
@@ -266,7 +264,7 @@ class LicencaExploracao {
 class Area {
   +int id
   +string nome
-  +string tipo  <<jazida|reserva_legal|patio|administrativa>>
+  +string tipo
   +string descricao
   +registrarProducao()
   +iniciarAtividade()
@@ -302,14 +300,14 @@ class Coordenada {
 
 class Mineral {
   +int id
-  +string nome  <<ouro|zinco|dolomito|casiterita>>
-  +string unidadeMedida  <<t|kg|g>>
+  +string nome
+  +string unidadeMedida
 }
 
 class AtividadeLavra {
   +int id
   +string codigo
-  +string tipo  <<prospeccao|avaliacao|preparo|extracao|filtragem|pesagem|qualidade|registro|expedicao>>
+  +string tipo
   +datetime inicio
   +datetime fim
   +string detalhes
@@ -376,7 +374,7 @@ class Expedicao {
 
 class Subproduto {
   +int id
-  +string tipo  <<areia|cascalho>>
+  +string tipo
   +float quantidade
   +date dataRegistro
   +registrar()
@@ -417,7 +415,7 @@ class Engenheiro {
 
 class Documento {
   +int id
-  +string tipo  <<laudo|relatorio|alvara|concessao|portaria|outros>>
+  +string tipo
   +string nomeArquivo
   +string caminho
   +date dataUpload
@@ -427,7 +425,7 @@ class Documento {
 
 class Mapa {
   +int id
-  +string tipo  <<altimetrico|geomorfologico|hidrico|topografico|operacional>>
+  +string tipo
   +string nomeArquivo
   +string caminho
   +visualizar()
@@ -479,75 +477,64 @@ class Camera {
 
 class Midia {
   +int id
-  +string tipo  <<imagem|video>>
+  +string tipo
   +string caminho
   +datetime dataHora
   +visualizar()
   +exportar()
 }
 
-%% =========================
-%% RELACIONAMENTOS E CARDINALIDADES
-%% =========================
+%% RELACIONAMENTOS
 
-Empresa "1" *-- "1..*" Area : compõe
+Empresa "1" *-- "1..*" Area : compoe
 Empresa "1" *-- "0..*" Documento : armazena
-Empresa "1" *-- "0..*" Mapa : contém
+Empresa "1" *-- "0..*" Mapa : contem
 Empresa "1" *-- "0..*" Funcionario : emprega
 Empresa "1" *-- "0..*" Veiculo : possui
 Empresa "1" *-- "0..*" Equipamento : possui
-Empresa "1" *-- "0..*" LicencaExploracao : detém
+Empresa "1" *-- "0..*" LicencaExploracao : detem
 Empresa "1" *-- "0..1" EstacaoMeteorologica : opera
 Empresa "1" *-- "0..*" Animal : monitora
 Empresa "1" *-- "0..*" Arvore : inventaria
 Empresa "1" *-- "0..*" Camera : instala
 
-%% Especialização de Área
 Jazida --|> Area
 ReservaLegal --|> Area
 Patio --|> Area
 Administrativa --|> Area
 
-%% Geometria da Área
-Area "1" *-- "3..*" Coordenada : delimitada por
+Area "1" *-- "3..*" Coordenada : delimitadaPor
 
-%% Jazida e Mineral (muitos-para-muitos)
-Jazida "*" -- "*" Mineral : contém/é explorada por
+Jazida "*" -- "*" Mineral : contem
 
-%% Operações e Produção
 Area "1" *-- "0..*" AtividadeLavra : realiza
 Area "1" *-- "0..*" LoteProducao : gera
 AtividadeLavra "1" --> "0..*" LoteProducao : produz
-AtividadeLavra "*" --> "1" Funcionario : responsável
-LoteProducao "*" --> "1" Mineral : refere-se a
+AtividadeLavra "*" --> "1" Funcionario : responsavel
+LoteProducao "*" --> "1" Mineral : mineral
 LoteProducao "1" o-- "0..*" TesteQualidade : possui
-TesteQualidade "0..*" --> "1" NivelPureza : avalia contra
+TesteQualidade "0..*" --> "1" NivelPureza : avaliaContra
 LoteProducao "0..1" -- "1" SeloPureza : recebe
 LoteProducao "0..1" o-- "1" Expedicao : expede
 LoteProducao "0..*" --> "0..*" Subproduto : gera
 LoteProducao "*" --> "0..1" CertificadoOrigem : certifica
 
-%% Documentos e Mapas vinculados
-Documento "0..*" --> "0..1" Area : relacionado a
+Documento "0..*" --> "0..1" Area : relacionadoA
 Mapa "*" -- "*" Area : cobre
 
-%% Recursos e utilização
-Equipamento "0..*" -- "*" Mineral : apropriado para
-Equipamento "0..*" --> "0..1" Area : alocado em
-Veiculo "0..*" --> "0..1" Area : opera em
+Equipamento "0..*" -- "*" Mineral : apropriadoPara
+Equipamento "0..*" --> "0..1" Area : alocadoEm
+Veiculo "0..*" --> "0..1" Area : operaEm
 AtividadeLavra "0..*" --> "0..*" Equipamento : utiliza
 AtividadeLavra "0..*" --> "0..*" Veiculo : movimenta
 
-%% Pessoal
 Engenheiro --|> Funcionario
-Engenheiro "1" --> "0..*" Area : responsável técnico
-TesteQualidade "*" --> "1" Funcionario : realizado por
-Expedicao "*" --> "1" Funcionario : responsável
+Engenheiro "1" --> "0..*" Area : responsavelTecnico
+TesteQualidade "*" --> "1" Funcionario : realizadoPor
+Expedicao "*" --> "1" Funcionario : responsavel
 
-%% Clima e correlação
 EstacaoMeteorologica "1" *-- "0..*" DadoClimatico : coleta
 DadoClimatico "0..*" -- "0..*" Area : correlaciona
 
-%% CFTV
 Area "0..*" --> "0..*" Camera : cobertura
 Camera "1" *-- "0..*" Midia : grava
