@@ -239,318 +239,315 @@ Diagrama Completo: Combine todas as classes e relacionamentos em um único diagr
 -->
 
 classDiagram
-    %% =========================
-    %% DIAGRAMA DE CLASSES SGOM
-    %% =========================
-    class Empresa {
-        +int id
-        +string nome
-        +string cnpj
-        +string endereco
-        +criarArea()
-        +registrarDocumento()
-        +emitirRelatorios()
-        +correlacionarProducaoClima()
-    }
+%% =========================
+%% SGOM - Diagrama de Classe (Mermaid)
+%% =========================
 
-    class LicencaExploracao {
-        +int id
-        +date dataInicio
-        +date dataFim
-        +string numeroOutorga
-        +string orgaoEmissor
-        +estaVigente(): bool
-    }
+class Empresa {
+  +int id
+  +string nome
+  +string cnpj
+  +string endereco
+  +criarArea()
+  +registrarDocumento()
+  +emitirRelatorios()
+  +correlacionarProducaoClima()
+}
 
-    class Area {
-        +int id
-        +string nome
-        +string tipo   <<jazida|reserva_legal|patio|administrativa>>
-        +string descricao
-        +registrarProducao()
-        +iniciarAtividade()
-        +finalizarAtividade()
-        +anexarMapa()
-    }
+class LicencaExploracao {
+  +int id
+  +string numeroOutorga
+  +date dataInicio
+  +date dataFim
+  +string orgaoEmissor
+  +estaVigente(): bool
+}
 
-    class Jazida {
-        +string metodoLavra
-        +string observacoes
-    }
+class Area {
+  +int id
+  +string nome
+  +string tipo  <<jazida|reserva_legal|patio|administrativa>>
+  +string descricao
+  +registrarProducao()
+  +iniciarAtividade()
+  +finalizarAtividade()
+  +anexarMapa()
+}
 
-    class ReservaLegal {
-        +string nivelProtecao
-        +string restricoes
-    }
+class Jazida {
+  +string metodoLavra
+  +string observacoes
+}
 
-    class Patio {
-        +string finalidade
-        +float capacidadeEstoque
-    }
+class ReservaLegal {
+  +string nivelProtecao
+  +string restricoes
+}
 
-    class Administrativa {
-        +string departamento
-    }
+class Patio {
+  +string finalidade
+  +float capacidadeEstoque
+}
 
-    class Coordenada {
-        +int id
-        +float latitude
-        +float longitude
-        +int ordemVertice
-    }
+class Administrativa {
+  +string departamento
+}
 
-    class Mineral {
-        +int id
-        +string nome  <<ouro|zinco|dolomito|casiterita|outros>>
-        +string unidadeMedida  <<t|kg|g>>
-    }
+class Coordenada {
+  +int id
+  +float latitude
+  +float longitude
+  +int ordemVertice
+}
 
-    class AtividadeLavra {
-        +int id
-        +string codigo
-        +string tipo  <<prospeccao|avaliacao|preparo|extracao|filtragem|pesagem|qualidade|registro|expedicao>>
-        +datetime inicio
-        +datetime fim
-        +string detalhes
-        +iniciar()
-        +encerrar()
-    }
+class Mineral {
+  +int id
+  +string nome  <<ouro|zinco|dolomito|casiterita>>
+  +string unidadeMedida  <<t|kg|g>>
+}
 
-    class LoteProducao {
-        +int idLote
-        +date dataExtracao
-        +float quantidade
-        +float peso
-        +float valorMinerioData
-        +registrar()
-        +vincularTesteQualidade()
-        +prepararExpedicao()
-    }
+class AtividadeLavra {
+  +int id
+  +string codigo
+  +string tipo  <<prospeccao|avaliacao|preparo|extracao|filtragem|pesagem|qualidade|registro|expedicao>>
+  +datetime inicio
+  +datetime fim
+  +string detalhes
+  +iniciar()
+  +encerrar()
+}
 
-    class TesteQualidade {
-        +int id
-        +date data
-        +float volume
-        +float peso
-        +string responsavel
-        +realizarTeste()
-        +calcularPureza()
-        +gerarLaudoPDF()
-    }
+class LoteProducao {
+  +int idLote
+  +date dataExtracao
+  +float quantidade
+  +float peso
+  +float valorMinerioData
+  +registrar()
+  +vincularTesteQualidade()
+  +prepararExpedicao()
+}
 
-    class NivelPureza {
-        +int id
-        +string nomeNivel
-        +float purezaMinima
-        +float purezaMaxima
-        +string descricao
-    }
+class TesteQualidade {
+  +int id
+  +date data
+  +float volume
+  +float peso
+  +string responsavel
+  +realizarTeste()
+  +calcularPureza()
+  +gerarLaudoPDF()
+}
 
-    class SeloPureza {
-        +int id
-        +date dataEmissao
-        +string codigoSelo
-        +gerarSelo()
-        +validar()
-    }
+class NivelPureza {
+  +int id
+  +string nomeNivel
+  +float purezaMinima
+  +float purezaMaxima
+  +string descricao
+}
 
-    class CertificadoOrigem {
-        +int id
-        +string numero
-        +date dataEmissao
-        +string emissor
-        +gerar()
-        +assinarDigitalmente()
-    }
+class SeloPureza {
+  +int id
+  +string codigoSelo
+  +date dataEmissao
+  +gerarSelo()
+  +validar()
+}
 
-    class Expedicao {
-        +int id
-        +date dataArmazenamentoCofre
-        +date dataSaida
-        +string responsavel
-        +string destino
-        +registrarEntradaCofre()
-        +registrarSaida()
-    }
+class CertificadoOrigem {
+  +int id
+  +string numero
+  +date dataEmissao
+  +string emissor
+  +gerar()
+  +assinarDigitalmente()
+}
 
-    class Subproduto {
-        +int id
-        +string tipo  <<areia|cascalho>>
-        +float quantidade
-        +date dataRegistro
-        +registrar()
-    }
+class Expedicao {
+  +int id
+  +date dataArmazenamentoCofre
+  +date dataSaida
+  +string responsavel
+  +string destino
+  +registrarEntradaCofre()
+  +registrarSaida()
+}
 
-    class Equipamento {
-        +int id
-        +string tipo
-        +string modelo
-        +string fabricante
-        +string numeroSerie
-        +alocarParaArea()
-        +manutencaoPreventiva()
-    }
+class Subproduto {
+  +int id
+  +string tipo  <<areia|cascalho>>
+  +float quantidade
+  +date dataRegistro
+  +registrar()
+}
 
-    class Veiculo {
-        +int id
-        +string placa
-        +string modelo
-        +string fabricante
-        +registrarMovimentacao()
-    }
+class Equipamento {
+  +int id
+  +string tipo
+  +string modelo
+  +string fabricante
+  +string numeroSerie
+  +alocarParaArea()
+  +manutencaoPreventiva()
+}
 
-    class Funcionario {
-        +int id
-        +string nome
-        +string cpf
-        +string funcao
-        +autenticar()
-        +assumirResponsabilidade()
-    }
+class Veiculo {
+  +int id
+  +string placa
+  +string modelo
+  +string fabricante
+  +registrarMovimentacao()
+}
 
-    class Engenheiro {
-        +string cref
-        +aprovarAtividade()
-        +assinarRelatorio()
-    }
+class Funcionario {
+  +int id
+  +string nome
+  +string cpf
+  +string funcao
+  +autenticar()
+  +assumirResponsabilidade()
+}
 
-    class Documento {
-        +int id
-        +string tipo  <<laudo|relatorio|alvara|concessao|portaria|outros>>
-        +string nomeArquivo
-        +string caminho
-        +date dataUpload
-        +visualizar()
-        +baixar()
-    }
+class Engenheiro {
+  +string cref
+  +aprovarAtividade()
+  +assinarRelatorio()
+}
 
-    class Mapa {
-        +int id
-        +string tipo  <<altimetrico|geomorfologico|hidrico|topografico|operacional>>
-        +string nomeArquivo
-        +string caminho
-        +visualizar()
-        +sobreporAreas()
-    }
+class Documento {
+  +int id
+  +string tipo  <<laudo|relatorio|alvara|concessao|portaria|outros>>
+  +string nomeArquivo
+  +string caminho
+  +date dataUpload
+  +visualizar()
+  +baixar()
+}
 
-    class EstacaoMeteorologica {
-        +int id
-        +string codigo
-        +string localizacao
-        +bool possuiPluviometro
-        +coletarDado()
-        +exportar()
-    }
+class Mapa {
+  +int id
+  +string tipo  <<altimetrico|geomorfologico|hidrico|topografico|operacional>>
+  +string nomeArquivo
+  +string caminho
+  +visualizar()
+  +sobreporAreas()
+}
 
-    class DadoClimatico {
-        +int id
-        +datetime timestamp
-        +float precipitacao_mm
-        +float temperatura_C
-        +float umidade_relativa
-        +float velocidadeVento_ms
-    }
+class EstacaoMeteorologica {
+  +int id
+  +string codigo
+  +string localizacao
+  +bool possuiPluviometro
+  +coletarDado()
+  +exportar()
+}
 
-    class Animal {
-        +int id
-        +string especie
-        +string statusConservacao
-        +string observacoes
-        +registrarAvistamento()
-    }
+class DadoClimatico {
+  +int id
+  +datetime timestamp
+  +float precipitacao_mm
+  +float temperatura_C
+  +float umidade_relativa
+  +float velocidadeVento_ms
+}
 
-    class Arvore {
-        +int id
-        +string especie
-        +float diametro_cm
-        +float altura_m
-        +registrarInventario()
-    }
+class Animal {
+  +int id
+  +string especie
+  +string statusConservacao
+  +string observacoes
+  +registrarAvistamento()
+}
 
-    class Camera {
-        +int id
-        +string fabricante
-        +string modelo
-        +string posicao
-        +ativar()
-        +desativar()
-    }
+class Arvore {
+  +int id
+  +string especie
+  +float diametro_cm
+  +float altura_m
+  +registrarInventario()
+}
 
-    class Midia {
-        +int id
-        +string tipo  <<imagem|video>>
-        +string caminho
-        +datetime dataHora
-        +visualizar()
-        +exportar()
-    }
+class Camera {
+  +int id
+  +string fabricante
+  +string modelo
+  +string posicao
+  +ativar()
+  +desativar()
+}
 
-    %% =========================
-    %% RELACIONAMENTOS E CARDINALIDADES
-    %% =========================
+class Midia {
+  +int id
+  +string tipo  <<imagem|video>>
+  +string caminho
+  +datetime dataHora
+  +visualizar()
+  +exportar()
+}
 
-    Empresa "1" *-- "1..*" Area : compõe
-    Empresa "1" *-- "0..*" Documento : armazena
-    Empresa "1" *-- "0..*" Mapa : contém
-    Empresa "1" *-- "0..*" Funcionario : emprega
-    Empresa "1" *-- "0..*" Veiculo : possui
-    Empresa "1" *-- "0..*" Equipamento : possui
-    Empresa "1" *-- "0..*" LicencaExploracao : detém
-    Empresa "1" *-- "0..1" EstacaoMeteorologica : opera
-    Empresa "1" *-- "0..*" Animal : monitora
-    Empresa "1" *-- "0..*" Arvore : inventaria
-    Empresa "1" *-- "0..*" Camera : instala
+%% =========================
+%% RELACIONAMENTOS E CARDINALIDADES
+%% =========================
 
-    %% Especializações de Área
-    Jazida --|> Area
-    ReservaLegal --|> Area
-    Patio --|> Area
-    Administrativa --|> Area
+Empresa "1" *-- "1..*" Area : compõe
+Empresa "1" *-- "0..*" Documento : armazena
+Empresa "1" *-- "0..*" Mapa : contém
+Empresa "1" *-- "0..*" Funcionario : emprega
+Empresa "1" *-- "0..*" Veiculo : possui
+Empresa "1" *-- "0..*" Equipamento : possui
+Empresa "1" *-- "0..*" LicencaExploracao : detém
+Empresa "1" *-- "0..1" EstacaoMeteorologica : opera
+Empresa "1" *-- "0..*" Animal : monitora
+Empresa "1" *-- "0..*" Arvore : inventaria
+Empresa "1" *-- "0..*" Camera : instala
 
-    %% Área e Geometria
-    Area "1" *-- "3..*" Coordenada : delimitada por
+%% Especialização de Área
+Jazida --|> Area
+ReservaLegal --|> Area
+Patio --|> Area
+Administrativa --|> Area
 
-    %% Jazida e Minerais (muitos-para-muitos)
-    Jazida "*" -- "*" Mineral : contém/é explorada por
+%% Geometria da Área
+Area "1" *-- "3..*" Coordenada : delimitada por
 
-    %% Operações e Produção
-    Area "1" *-- "0..*" AtividadeLavra : realiza
-    Area "1" *-- "0..*" LoteProducao : gera
-    AtividadeLavra "1" --> "0..*" LoteProducao : produz
-    AtividadeLavra "*" --> "1" Funcionario : responsável
-    LoteProducao "*" --> "1" Mineral : refere-se a
-    LoteProducao "1" o-- "0..*" TesteQualidade : possui
-    TesteQualidade "0..*" --> "1" NivelPureza : avalia contra
-    LoteProducao "0..1" -- "1" SeloPureza : recebe
-    LoteProducao "0..1" o-- "1" Expedicao : expede
-    LoteProducao "0..*" --> "0..*" Subproduto : gera
-    LoteProducao "*" --> "0..1" CertificadoOrigem : certifica
+%% Jazida e Mineral (muitos-para-muitos)
+Jazida "*" -- "*" Mineral : contém/é explorada por
 
-    %% Documentos e Mapas vinculados a Áreas
-    Documento "0..*" --> "0..1" Area : relacionado a
-    Mapa "*" -- "*" Area : cobre
+%% Operações e Produção
+Area "1" *-- "0..*" AtividadeLavra : realiza
+Area "1" *-- "0..*" LoteProducao : gera
+AtividadeLavra "1" --> "0..*" LoteProducao : produz
+AtividadeLavra "*" --> "1" Funcionario : responsável
+LoteProducao "*" --> "1" Mineral : refere-se a
+LoteProducao "1" o-- "0..*" TesteQualidade : possui
+TesteQualidade "0..*" --> "1" NivelPureza : avalia contra
+LoteProducao "0..1" -- "1" SeloPureza : recebe
+LoteProducao "0..1" o-- "1" Expedicao : expede
+LoteProducao "0..*" --> "0..*" Subproduto : gera
+LoteProducao "*" --> "0..1" CertificadoOrigem : certifica
 
-    %% Recursos (equip/veículos) e uso
-    Equipamento "0..*" -- "*" Mineral : apropriado para
-    Equipamento "0..*" --> "0..1" Area : alocado em
-    Veiculo "0..*" --> "0..1" Area : opera em
-    AtividadeLavra "0..*" --> "0..*" Equipamento : utiliza
-    AtividadeLavra "0..*" --> "0..*" Veiculo : movimenta
+%% Documentos e Mapas vinculados
+Documento "0..*" --> "0..1" Area : relacionado a
+Mapa "*" -- "*" Area : cobre
 
-    %% Pessoal
-    Engenheiro --|> Funcionario
-    Engenheiro "1" --> "0..*" Area : responsável técnico
-    TesteQualidade "*" --> "1" Funcionario : realizado por
-    Expedicao "*" --> "1" Funcionario : responsável
+%% Recursos e utilização
+Equipamento "0..*" -- "*" Mineral : apropriado para
+Equipamento "0..*" --> "0..1" Area : alocado em
+Veiculo "0..*" --> "0..1" Area : opera em
+AtividadeLavra "0..*" --> "0..*" Equipamento : utiliza
+AtividadeLavra "0..*" --> "0..*" Veiculo : movimenta
 
-    %% Monitoramento ambiental e clima
-    EstacaoMeteorologica "1" *-- "0..*" DadoClimatico : coleta
-    DadoClimatico "0..*" -- "0..*" Area : correlação operacional
+%% Pessoal
+Engenheiro --|> Funcionario
+Engenheiro "1" --> "0..*" Area : responsável técnico
+TesteQualidade "*" --> "1" Funcionario : realizado por
+Expedicao "*" --> "1" Funcionario : responsável
 
-    %% Biodiversidade por área
-    Area "0..1" *-- "0..*" Animal : fauna
-    Area "0..1" *-- "0..*" Arvore : flora
+%% Clima e correlação
+EstacaoMeteorologica "1" *-- "0..*" DadoClimatico : coleta
+DadoClimatico "0..*" -- "0..*" Area : correlaciona
 
-    %% CFTV
-    Area "0..*" --> "0..*" Camera : cobertura
-    Camera "1" *-- "0..*" Midia : grava
+%% CFTV
+Area "0..*" --> "0..*" Camera : cobertura
+Camera "1" *-- "0..*" Midia : grava
