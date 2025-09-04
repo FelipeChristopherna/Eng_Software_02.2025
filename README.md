@@ -238,6 +238,8 @@ Herança (é um tipo de): Engenheiro --|> Funcionario (Engenheiro é um tipo de 
 Diagrama Completo: Combine todas as classes e relacionamentos em um único diagrama classDiagram, garantindo que a lógica do negócio descrita no cenário seja representada de forma coesa e correta.
 -->
 
+```mermaid
+
 classDiagram
 
 class Empresa {
@@ -535,3 +537,4 @@ DadoClimatico "0..*" -- "0..*" Area
 
 Area "0..*" --> "0..*" Camera
 Camera "1" *-- "0..*" Midia
+```
