@@ -186,10 +186,10 @@ Resultado Esperado: Um único documento Markdown contendo todos os requisitos or
 | RNF009 | Não Funcional        | O sistema deve manter compatibilidade com auditorias, permitindo exportação de registros em formatos padrão. |
 | RNF010 | Não Funcional        | O sistema deve permitir integração futura com ferramentas de análise de dados e inteligência artificial. |
 
-## - [3. Diagramas](#3-diagramas)
+<!-- ## - [3. Diagramas](#3-diagramas)
   - [3.1. Diagrama de classe](#31-diagrama-de-classe)
  Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
-
+-->
 <!-- 
 Função/Persona: Você é um Arquiteto de Software Sênior, especializado em modelagem de dados e design de sistemas. Sua tarefa é traduzir um complexo cenário de negócios em um Diagrama de Classe UML claro e preciso.
 
