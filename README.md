@@ -556,5 +556,5 @@ classDiagram
     %% CFTV
     Area "0..*" --> "0..*" Camera : cobertura
     Camera "1" *-- "0..*" Midia : grava
-
 ```
+
