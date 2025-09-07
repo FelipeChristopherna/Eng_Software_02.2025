@@ -19,7 +19,7 @@ Descrição dos elementos do trabalho:
 >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
 
   - [3.2. Diagrama ER](#32-diagrama-er)
->> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
+>> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.w
 >> Crie um prompt para que o diagrama de classe vire comandos CREATE TABLE e coloque nos anexos! No final deste documento.
 
   - [3.3. Diagrama de casos de uso](#33-diagrama-de-casos-de-uso)

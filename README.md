@@ -1307,3 +1307,177 @@ CREATE INDEX idx_lotes_area         ON lotes_producao(area_id);
 CREATE INDEX idx_lotes_mineral      ON lotes_producao(mineral_id);
 CREATE INDEX idx_tq_lote            ON testes_qualidade(lote_id);
 CREATE INDEX idx_dados_timestamp    ON dados_climaticos(timestamp);
+
+## - [3.3. Diagrama de casos de uso](#33-diagrama-de-casos-de-uso)
+>> Crie um prompt para os casos de uso com PlantUML
+
+<!-- 
+
+-->
+
+@startuml
+title SGOM – Diagrama de Casos de Uso • Empresa de Mineração
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+'========================
+' Atores
+'========================
+actor "Engenheiro de Minas" as EngenheiroDeMinas
+actor "Técnico de Qualidade" as TecnicoDeQualidade
+actor "Operador de Maquinário" as OperadorDeMaquinario
+actor "Gestor Ambiental" as GestorAmbiental
+actor "Administrador" as Administrador
+actor "Auditor" as Auditor
+actor "Sistema de Meteorologia" as SistemaClima  <<external>>
+
+'========================
+' Pacote: Operações de Mineração
+'========================
+package "Operações de Mineração" {
+  [Cadastrar Área/Jazida] as UC_CadArea
+  [Registrar Coordenadas da Área] as UC_Coord
+  [Planejar Atividades de Lavra] as UC_PlanejarLavra
+  [Iniciar/Encerrar Atividade de Lavra] as UC_AtividadeLavra
+  [Registrar Produção Diária por Área] as UC_ProdDiaria
+  [Identificar Lote de Produção] as UC_IdLote
+  [Movimentar Equipamentos/Veículos] as UC_MovRecursos
+  [Registrar Subprodutos (areia/cascalho)] as UC_Subprod
+}
+
+EngenheiroDeMinas -- UC_CadArea
+EngenheiroDeMinas -- UC_PlanejarLavra
+OperadorDeMaquinario -- UC_AtividadeLavra
+OperadorDeMaquinario -- UC_ProdDiaria
+OperadorDeMaquinario -- UC_IdLote
+OperadorDeMaquinario -- UC_MovRecursos
+
+UC_ProdDiaria ..> UC_AtividadeLavra : <<include>>
+UC_IdLote ..> UC_AtividadeLavra : <<include>>
+
+'========================
+' Pacote: Controle de Qualidade
+'========================
+package "Controle de Qualidade" {
+  [Registrar Teste de Qualidade] as UC_TesteQual
+  [Classificar por Nível de Pureza] as UC_ClassifPureza
+  [Emitir Selo de Pureza] as UC_Selo
+  [Emitir Certificado de Origem] as UC_CertOrigem
+  [Análise por Especialista] as UC_AnaliseHumana
+  [Análise por Visão Computacional] as UC_AnaliseCV
+}
+
+TecnicoDeQualidade -- UC_TesteQual
+TecnicoDeQualidade -- UC_ClassifPureza
+TecnicoDeQualidade -- UC_Selo
+TecnicoDeQualidade -- UC_CertOrigem
+TecnicoDeQualidade -- UC_AnaliseHumana
+TecnicoDeQualidade -- UC_AnaliseCV
+EngenheiroDeMinas -- UC_ClassifPureza
+
+UC_TesteQual ..> UC_AnaliseHumana : <<include>>
+UC_TesteQual ..> UC_AnaliseCV : <<include>>
+UC_Selo ..> UC_ClassifPureza : <<extend>>
+UC_CertOrigem ..> UC_TesteQual : <<include>>
+
+'========================
+' Pacote: Logística & Expedição
+'========================
+package "Logística & Expedição" {
+  [Armazenar Lote em Cofre] as UC_Cofre
+  [Expedir Lote] as UC_Expedir
+  [Registrar Valor de Mercado na Data] as UC_ValorMercado
+}
+
+OperadorDeMaquinario -- UC_Cofre
+OperadorDeMaquinario -- UC_Expedir
+EngenheiroDeMinas -- UC_ValorMercado
+
+UC_Expedir ..> UC_Cofre : <<include>>
+
+'========================
+' Pacote: Gestão Ambiental
+'========================
+package "Gestão Ambiental" {
+  [Cadastrar/Monitorar Fauna] as UC_Fauna
+  [Cadastrar/Monitorar Flora] as UC_Flora
+  [Gerir Projetos de Reflorestamento] as UC_Reflorest
+  [Gerir Mapas e Camadas] as UC_Mapas
+  [Correlacionar Produção x Clima] as UC_ProdClima
+}
+
+GestorAmbiental -- UC_Fauna
+GestorAmbiental -- UC_Flora
+GestorAmbiental -- UC_Reflorest
+GestorAmbiental -- UC_Mapas
+GestorAmbiental -- UC_ProdClima
+EngenheiroDeMinas -- UC_Mapas
+EngenheiroDeMinas -- UC_ProdClima
+
+'========================
+' Pacote: Meteorologia & Análise
+'========================
+package "Meteorologia & Análise" {
+  [Ingerir Dados Climáticos] as UC_IngestClima
+  [Visualizar Séries Climáticas] as UC_ViewClima
+  [Gerar Análises/Relatórios] as UC_Relatorios
+  [Exportar Registros (CSV/PDF)] as UC_Exportar
+}
+
+SistemaClima -- UC_IngestClima
+GestorAmbiental -- UC_ViewClima
+EngenheiroDeMinas -- UC_ViewClima
+EngenheiroDeMinas -- UC_Relatorios
+
+UC_ProdClima ..> UC_IngestClima : <<include>>
+UC_Relatorios ..> UC_Exportar : <<include>>
+
+'========================
+' Pacote: Documentos & Geoespacial
+'========================
+package "Documentos & Geoespacial" {
+  [Upload/Armazenar Documentos PDF] as UC_DocsPDF
+  [Vincular Documentos à Área/Jazida] as UC_VincDocArea
+  [Gerir Mapas Operacionais e Ambientais] as UC_GeoOps
+}
+
+Administrador -- UC_DocsPDF
+GestorAmbiental -- UC_GeoOps
+EngenheiroDeMinas -- UC_VincDocArea
+
+UC_VincDocArea ..> UC_DocsPDF : <<include>>
+
+'========================
+' Pacote: Administração do Sistema
+'========================
+package "Administração do Sistema" {
+  [Gerenciar Usuários e Perfis] as UC_Usuarios
+  [Gerenciar Permissões/Acessos] as UC_Permissoes
+  [Configurar Integrações] as UC_Integracoes
+  [Backup & Restauração] as UC_Backup
+  [Trilha de Auditoria] as UC_AuditoriaTrail
+}
+
+Administrador -- UC_Usuarios
+Administrador -- UC_Permissoes
+Administrador -- UC_Integracoes
+Administrador -- UC_Backup
+
+'========================
+' Pacote: Auditoria & Conformidade
+'========================
+package "Auditoria & Conformidade" {
+  [Consultar Registros e Lotes] as UC_Consultar
+  [Auditar Atividades e Acessos] as UC_Auditar
+  [Baixar Evidências e Documentos] as UC_BaixarEvid
+}
+
+Auditor -- UC_Consultar
+Auditor -- UC_Auditar
+Auditor -- UC_BaixarEvid
+
+UC_Auditar ..> UC_AuditoriaTrail : <<include>>
+UC_BaixarEvid ..> UC_Consultar : <<include>>
+@enduml
