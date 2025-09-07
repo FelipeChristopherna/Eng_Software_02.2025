@@ -1310,10 +1310,30 @@ CREATE INDEX idx_dados_timestamp    ON dados_climaticos(timestamp);
 
 ## - [3.3. Diagrama de casos de uso](#33-diagrama-de-casos-de-uso)
 >> Crie um prompt para os casos de uso com PlantUML
+
   ## Diagrama De Caso de uso (SGOM)
   ![Diagrama De casos de uso](Arquivos/Diagrama.UML.png)
-<!-- 
 
+<!-- 
+PROMPT USADO-> 
+
+  Função/Persona: Analista de Requisitos Sênior.
+
+Objetivo: Elaborar um Diagrama de Casos de Uso detalhado, utilizando a sintaxe PlantUML dentro de um bloco de código Markdown. O diagrama deve representar as principais interações dos usuários (atores) com o Sistema de Gerenciamento de Operações de Mineração (SGOM), com base na descrição da empresa.
+
+Instruções:
+
+Formato de Saída: Gere a resposta dentro de um bloco de código Markdown, iniciando com \`\`\`plantuml e envolvendo o diagrama com @startuml e @enduml.
+
+Atores: Identifique os principais atores do sistema, como EngenheiroDeMinas, TecnicoDeQualidade, OperadorDeMaquinario, GestorAmbiental, Administrador e Auditor. Use a sintaxe actor "Nome do Ator" as Alias.
+
+Casos de Uso: Defina os casos de uso que representam as funcionalidades essenciais descritas no cenário. Organize-os visualmente, se possível, agrupando-os por módulos (ex: "Operações de Mineração", "Controle de Qualidade", "Gestão Ambiental", "Administração"). Use a sintaxe (Nome do Caso de Uso).
+
+Relacionamentos: Conecte os atores aos casos de uso com os quais eles interagem, usando setas (--).
+
+Relações entre Casos de Uso: Se aplicável, utilize as relações <<include>> e <<extend>> para mostrar dependências ou funcionalidades opcionais entre os casos de uso.
+
+Clareza e Completude: O diagrama final deve oferecer uma visão clara e completa das funcionalidades do sistema e de quem as utiliza.
 
 RESULTADO ->
 
