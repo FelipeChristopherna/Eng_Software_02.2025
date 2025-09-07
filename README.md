@@ -655,8 +655,8 @@ erDiagram
 
     MINERAIS {
       int id PK
-      string nome  /* ouro|zinco|dolomito|casiterita */
-      string unidade_medida  /* t|kg|g */
+      string nome  
+      string unidade_medida
     }
 
     JAZIDA_MINERAL {  %% tabela de junção
@@ -668,9 +668,9 @@ erDiagram
     ATIVIDADES_LAVRA {
       int id PK
       int area_id FK
-      int responsavel_id FK  /* funcionario */
+      int responsavel_id FK  
       string codigo
-      string tipo  /* prospeccao|avaliacao|preparo|extracao|filtragem|pesagem|qualidade|registro|expedicao */
+      string tipo  
       datetime inicio
       datetime fim
       string detalhes
@@ -690,7 +690,7 @@ erDiagram
     TESTES_QUALIDADE {
       int id PK
       int lote_id FK
-      int responsavel_id FK  /* funcionario */
+      int responsavel_id FK  
       int nivel_pureza_id FK
       date data_teste
       float volume
@@ -725,7 +725,7 @@ erDiagram
     EXPEDICOES {
       int id PK
       int lote_id FK
-      int responsavel_id FK  /* funcionario */
+      int responsavel_id FK  
       date data_armazenamento_cofre
       date data_saida
       string destino
@@ -734,7 +734,7 @@ erDiagram
     SUBPRODUTOS {
       int id PK
       int lote_id FK
-      string tipo  /* areia|cascalho */
+      string tipo  
       float quantidade
       date data_registro
     }
@@ -770,7 +770,7 @@ erDiagram
     }
 
     ENGENHEIROS {
-      int funcionario_id PK, FK  /* sub-tipo de funcionario */
+      int funcionario_id PK, FK  
       string cref
     }
 
@@ -778,7 +778,7 @@ erDiagram
       int id PK
       int empresa_id FK
       int area_id FK
-      string tipo  /* laudo|relatorio|alvara|concessao|portaria|outros */
+      string tipo  
       string nome_arquivo
       string caminho
       date data_upload
@@ -787,7 +787,7 @@ erDiagram
     MAPAS {
       int id PK
       int empresa_id FK
-      string tipo  /* altimetrico|geomorfologico|hidrico|topografico|operacional */
+      string tipo 
       string nome_arquivo
       string caminho
     }
@@ -837,7 +837,7 @@ erDiagram
     MIDIAS {
       int id PK
       int camera_id FK
-      string tipo  /* imagem|video */
+      string tipo 
       string caminho
       datetime datahora
     }
