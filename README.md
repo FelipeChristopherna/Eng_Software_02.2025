@@ -536,7 +536,7 @@ DadoClimatico "0..*" -- "0..*" Area
 Area "0..*" --> "0..*" Camera
 Camera "1" *-- "0..*" Midia
 
-  - [3.2. Diagrama ER](#32-diagrama-er)
+## - [3.2. Diagrama ER](#32-diagrama-er)
 >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
 
 <!-- 
