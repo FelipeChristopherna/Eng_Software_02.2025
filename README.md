@@ -844,3 +844,473 @@ erDiagram
 ```
 
 >> Crie um prompt para que o diagrama de classe vire comandos CREATE TABLE e coloque nos anexos! No final deste documento.
+
+<!-- 
+  Função/Persona: Engenheiro de Banco de Dados.
+
+Objetivo: Converter um Diagrama de Classe (em sintaxe Mermaid) em um script SQL contendo os comandos CREATE TABLE correspondentes. A saída deve ser formatada em Markdown, pronta para ser adicionada a uma seção de anexos de um documento de projeto.
+
+Contexto de Entrada: O prompt receberá como entrada um Diagrama de Classe completo do sistema SGOM, feito em Mermaid.
+
+Instruções:
+
+Formato de Saída: Crie um título de segundo nível ## Anexos e um subtítulo de terceiro nível ### Comandos SQL (CREATE TABLE). Abaixo, insira um bloco de código SQL (\`\`\`sql) com todos os comandos gerados.
+
+Mapeamento: Converta cada classe do diagrama em uma instrução CREATE TABLE.
+
+Colunas e Tipos: Transforme os atributos das classes em colunas da tabela, utilizando tipos de dados SQL apropriados (ex: VARCHAR(255), INT, DECIMAL(10, 2), DATETIME, TEXT).
+
+Chaves Primárias: Defina uma chave primária para cada tabela, preferencialmente uma coluna id autoincrementável.
+
+Chaves Estrangeiras: Implemente os relacionamentos do diagrama de classe utilizando chaves estrangeiras (FOREIGN KEY) com a cláusula REFERENCES para garantir a integridade relacional.
+
+Validação: O script SQL final deve ser sintaticamente correto e pronto para ser executado em um sistema de gerenciamento de banco de dados relacional.
+-->
+
+-- Dialeto-alvo: MySQL/MariaDB (InnoDB, utf8mb4). Ajuste tipos se usar outro SGBD.
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- =========================
+-- TABELAS PRINCIPAIS
+-- =========================
+
+CREATE TABLE empresas (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  nome              VARCHAR(255) NOT NULL,
+  cnpj              VARCHAR(32),
+  endereco          VARCHAR(255)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE licencas_exploracao (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  empresa_id        INT NOT NULL,
+  numero_outorga    VARCHAR(100) NOT NULL,
+  data_inicio       DATE NOT NULL,
+  data_fim          DATE NOT NULL,
+  orgao_emissor     VARCHAR(100),
+  CONSTRAINT fk_licenca_empresa
+    FOREIGN KEY (empresa_id) REFERENCES empresas(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE areas (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  empresa_id        INT NOT NULL,
+  nome              VARCHAR(100) NOT NULL,
+  tipo              VARCHAR(32) NOT NULL, -- jazida|reserva_legal|patio|administrativa
+  descricao         TEXT,
+  CONSTRAINT fk_area_empresa
+    FOREIGN KEY (empresa_id) REFERENCES empresas(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Especializações de Área (table-per-subclass 1:1)
+CREATE TABLE jazidas (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  area_id           INT NOT NULL UNIQUE,
+  metodo_lavra      VARCHAR(100),
+  observacoes       TEXT,
+  CONSTRAINT fk_jazida_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE reservas_legais (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  area_id           INT NOT NULL UNIQUE,
+  nivel_protecao    VARCHAR(100),
+  restricoes        TEXT,
+  CONSTRAINT fk_reserva_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE patios (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  area_id           INT NOT NULL UNIQUE,
+  finalidade        VARCHAR(100),
+  capacidade_estoque DECIMAL(12,2),
+  CONSTRAINT fk_patio_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE administrativas (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  area_id           INT NOT NULL UNIQUE,
+  departamento      VARCHAR(100),
+  CONSTRAINT fk_adm_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE coordenadas (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  area_id           INT NOT NULL,
+  latitude          DECIMAL(9,6) NOT NULL,
+  longitude         DECIMAL(9,6) NOT NULL,
+  ordem_vertice     INT NOT NULL,
+  CONSTRAINT fk_coord_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE minerais (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  nome              VARCHAR(50) NOT NULL,   -- ouro|zinco|dolomito|casiterita
+  unidade_medida    VARCHAR(10) NOT NULL    -- t|kg|g
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Relação N:N jazida <-> mineral
+CREATE TABLE jazida_mineral (
+  jazida_id         INT NOT NULL,
+  mineral_id        INT NOT NULL,
+  observacao        VARCHAR(255),
+  PRIMARY KEY (jazida_id, mineral_id),
+  CONSTRAINT fk_jazida_mineral_jazida
+    FOREIGN KEY (jazida_id) REFERENCES jazidas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_jazida_mineral_mineral
+    FOREIGN KEY (mineral_id) REFERENCES minerais(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE funcionarios (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  empresa_id        INT NOT NULL,
+  nome              VARCHAR(150) NOT NULL,
+  cpf               VARCHAR(20),
+  funcao            VARCHAR(100),
+  CONSTRAINT fk_func_empresa
+    FOREIGN KEY (empresa_id) REFERENCES empresas(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Subtipo Engenheiro (1:1 com funcionarios)
+CREATE TABLE engenheiros (
+  funcionario_id    INT PRIMARY KEY,
+  cref              VARCHAR(50),
+  CONSTRAINT fk_eng_func
+    FOREIGN KEY (funcionario_id) REFERENCES funcionarios(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE veiculos (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  empresa_id        INT NOT NULL,
+  placa             VARCHAR(20),
+  modelo            VARCHAR(100),
+  fabricante        VARCHAR(100),
+  CONSTRAINT fk_veic_empresa
+    FOREIGN KEY (empresa_id) REFERENCES empresas(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE equipamentos (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  empresa_id        INT NOT NULL,
+  tipo              VARCHAR(100),
+  modelo            VARCHAR(100),
+  fabricante        VARCHAR(100),
+  numero_serie      VARCHAR(100),
+  CONSTRAINT fk_equip_empresa
+    FOREIGN KEY (empresa_id) REFERENCES empresas(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Relação N:N equipamento <-> mineral
+CREATE TABLE equipamento_mineral (
+  equipamento_id    INT NOT NULL,
+  mineral_id        INT NOT NULL,
+  PRIMARY KEY (equipamento_id, mineral_id),
+  CONSTRAINT fk_eqmin_equip
+    FOREIGN KEY (equipamento_id) REFERENCES equipamentos(id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_eqmin_mineral
+    FOREIGN KEY (mineral_id) REFERENCES minerais(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE atividades_lavra (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  area_id           INT NOT NULL,
+  responsavel_id    INT NOT NULL,       -- funcionario responsável
+  codigo            VARCHAR(50) NOT NULL,
+  tipo              VARCHAR(30) NOT NULL,  -- prospeccao|avaliacao|preparo|extracao|filtragem|pesagem|qualidade|registro|expedicao
+  inicio            DATETIME NOT NULL,
+  fim               DATETIME,
+  detalhes          TEXT,
+  CONSTRAINT fk_ativ_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT fk_ativ_func
+    FOREIGN KEY (responsavel_id) REFERENCES funcionarios(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Relações N:N atividade <-> equipamento / veiculo
+CREATE TABLE atividade_equipamento (
+  atividade_id      INT NOT NULL,
+  equipamento_id    INT NOT NULL,
+  PRIMARY KEY (atividade_id, equipamento_id),
+  CONSTRAINT fk_ateq_ativ
+    FOREIGN KEY (atividade_id) REFERENCES atividades_lavra(id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_ateq_equip
+    FOREIGN KEY (equipamento_id) REFERENCES equipamentos(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE atividade_veiculo (
+  atividade_id      INT NOT NULL,
+  veiculo_id        INT NOT NULL,
+  PRIMARY KEY (atividade_id, veiculo_id),
+  CONSTRAINT fk_atve_ativ
+    FOREIGN KEY (atividade_id) REFERENCES atividades_lavra(id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_atve_veic
+    FOREIGN KEY (veiculo_id) REFERENCES veiculos(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE lotes_producao (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  area_id           INT NOT NULL,
+  atividade_id      INT NOT NULL,
+  mineral_id        INT NOT NULL,
+  data_extracao     DATE NOT NULL,
+  quantidade        DECIMAL(14,3) NOT NULL,
+  peso              DECIMAL(14,3),
+  valor_minerio_data DECIMAL(14,2),
+  CONSTRAINT fk_lote_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT fk_lote_ativ
+    FOREIGN KEY (atividade_id) REFERENCES atividades_lavra(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT fk_lote_mineral
+    FOREIGN KEY (mineral_id) REFERENCES minerais(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE niveis_pureza (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  nome_nivel        VARCHAR(100) NOT NULL,
+  pureza_minima     DECIMAL(5,2) NOT NULL,
+  pureza_maxima     DECIMAL(5,2) NOT NULL,
+  descricao         VARCHAR(255)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE testes_qualidade (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  lote_id           INT NOT NULL,
+  responsavel_id    INT NOT NULL,
+  nivel_pureza_id   INT NOT NULL,
+  data_teste        DATE NOT NULL,
+  volume            DECIMAL(14,3),
+  peso              DECIMAL(14,3),
+  laudo_pdf_path    VARCHAR(255),
+  CONSTRAINT fk_tq_lote
+    FOREIGN KEY (lote_id) REFERENCES lotes_producao(id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_tq_func
+    FOREIGN KEY (responsavel_id) REFERENCES funcionarios(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT fk_tq_nivel
+    FOREIGN KEY (nivel_pureza_id) REFERENCES niveis_pureza(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE selos_pureza (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  lote_id           INT NOT NULL UNIQUE, -- 0..1 selo por lote
+  codigo_selo       VARCHAR(100) NOT NULL,
+  data_emissao      DATE NOT NULL,
+  CONSTRAINT fk_selo_lote
+    FOREIGN KEY (lote_id) REFERENCES lotes_producao(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE certificados_origem (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  lote_id           INT NOT NULL UNIQUE, -- 0..1 certificado por lote
+  numero            VARCHAR(100) NOT NULL,
+  data_emissao      DATE NOT NULL,
+  emissor           VARCHAR(100),
+  assinatura_digital VARCHAR(255),
+  CONSTRAINT fk_cert_lote
+    FOREIGN KEY (lote_id) REFERENCES lotes_producao(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE expedicoes (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  lote_id           INT NOT NULL UNIQUE, -- 0..1 expedição por lote
+  responsavel_id    INT NOT NULL,
+  data_armazenamento_cofre DATE,
+  data_saida        DATE,
+  destino           VARCHAR(255),
+  CONSTRAINT fk_expe_lote
+    FOREIGN KEY (lote_id) REFERENCES lotes_producao(id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_expe_func
+    FOREIGN KEY (responsavel_id) REFERENCES funcionarios(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE subprodutos (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  lote_id           INT NOT NULL,
+  tipo              VARCHAR(50) NOT NULL,  -- areia|cascalho
+  quantidade        DECIMAL(14,3) NOT NULL,
+  data_registro     DATE NOT NULL,
+  CONSTRAINT fk_subp_lote
+    FOREIGN KEY (lote_id) REFERENCES lotes_producao(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE documentos (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  empresa_id        INT NOT NULL,
+  area_id           INT NULL,
+  tipo              VARCHAR(50) NOT NULL, -- laudo|relatorio|alvara|concessao|portaria|outros
+  nome_arquivo      VARCHAR(255) NOT NULL,
+  caminho           VARCHAR(255) NOT NULL,
+  data_upload       DATE NOT NULL,
+  CONSTRAINT fk_doc_empresa
+    FOREIGN KEY (empresa_id) REFERENCES empresas(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT fk_doc_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE mapas (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  empresa_id        INT NOT NULL,
+  tipo              VARCHAR(50) NOT NULL, -- altimetrico|geomorfologico|hidrico|topografico|operacional
+  nome_arquivo      VARCHAR(255) NOT NULL,
+  caminho           VARCHAR(255) NOT NULL,
+  CONSTRAINT fk_mapa_empresa
+    FOREIGN KEY (empresa_id) REFERENCES empresas(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- N:N mapas <-> areas
+CREATE TABLE mapa_area (
+  mapa_id           INT NOT NULL,
+  area_id           INT NOT NULL,
+  PRIMARY KEY (mapa_id, area_id),
+  CONSTRAINT fk_mapa_area_mapa
+    FOREIGN KEY (mapa_id) REFERENCES mapas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_mapa_area_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE estacoes_meteorologicas (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  empresa_id        INT NOT NULL,
+  codigo            VARCHAR(50) NOT NULL,
+  localizacao       VARCHAR(255),
+  possui_pluviometro BOOLEAN NOT NULL DEFAULT TRUE,
+  CONSTRAINT fk_estacao_empresa
+    FOREIGN KEY (empresa_id) REFERENCES empresas(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE dados_climaticos (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  estacao_id        INT NOT NULL,
+  timestamp         DATETIME NOT NULL,
+  precipitacao_mm   DECIMAL(10,2),
+  temperatura_c     DECIMAL(5,2),
+  umidade_relativa  DECIMAL(5,2),
+  velocidade_vento_ms DECIMAL(6,2),
+  CONSTRAINT fk_dado_estacao
+    FOREIGN KEY (estacao_id) REFERENCES estacoes_meteorologicas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- N:N dados_climaticos <-> areas (correlação)
+CREATE TABLE dado_area (
+  dado_id           INT NOT NULL,
+  area_id           INT NOT NULL,
+  PRIMARY KEY (dado_id, area_id),
+  CONSTRAINT fk_dado_area_dado
+    FOREIGN KEY (dado_id) REFERENCES dados_climaticos(id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_dado_area_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE animais (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  area_id           INT NOT NULL,
+  especie           VARCHAR(150) NOT NULL,
+  status_conservacao VARCHAR(100),
+  observacoes       TEXT,
+  CONSTRAINT fk_animal_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE arvores (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  area_id           INT NOT NULL,
+  especie           VARCHAR(150) NOT NULL,
+  diametro_cm       DECIMAL(7,2),
+  altura_m          DECIMAL(7,2),
+  CONSTRAINT fk_arvore_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE cameras (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  empresa_id        INT NOT NULL,
+  fabricante        VARCHAR(100),
+  modelo            VARCHAR(100),
+  posicao           VARCHAR(255),
+  CONSTRAINT fk_camera_empresa
+    FOREIGN KEY (empresa_id) REFERENCES empresas(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- N:N areas <-> cameras (cobertura)
+CREATE TABLE area_camera (
+  area_id           INT NOT NULL,
+  camera_id         INT NOT NULL,
+  PRIMARY KEY (area_id, camera_id),
+  CONSTRAINT fk_areacam_area
+    FOREIGN KEY (area_id) REFERENCES areas(id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_areacam_camera
+    FOREIGN KEY (camera_id) REFERENCES cameras(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE midias (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  camera_id         INT NOT NULL,
+  tipo              VARCHAR(20) NOT NULL, -- imagem|video
+  caminho           VARCHAR(255) NOT NULL,
+  datahora          DATETIME NOT NULL,
+  CONSTRAINT fk_midia_camera
+    FOREIGN KEY (camera_id) REFERENCES cameras(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Documentos e Mapas também pertencem à empresa já modelado acima.
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- Índices úteis (exemplos)
+CREATE INDEX idx_areas_empresa      ON areas(empresa_id);
+CREATE INDEX idx_lotes_area         ON lotes_producao(area_id);
+CREATE INDEX idx_lotes_mineral      ON lotes_producao(mineral_id);
+CREATE INDEX idx_tq_lote            ON testes_qualidade(lote_id);
+CREATE INDEX idx_dados_timestamp    ON dados_climaticos(timestamp);
