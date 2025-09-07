@@ -634,7 +634,7 @@ erDiagram
       int id PK
       int empresa_id FK
       string nome
-      string tipo  /* jazida|reserva_legal|patio|administrativa */
+      string tipo  
       string descricao
     }
 
