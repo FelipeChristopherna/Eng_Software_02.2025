@@ -1310,10 +1310,12 @@ CREATE INDEX idx_dados_timestamp    ON dados_climaticos(timestamp);
 
 ## - [3.3. Diagrama de casos de uso](#33-diagrama-de-casos-de-uso)
 >> Crie um prompt para os casos de uso com PlantUML
-
+  ## Diagrama De Caso de uso (SGOM)
+  ![Diagrama De casos de uso](Arquivos/Diagrama.UML.png)
 <!-- 
 
--->
+
+RESULTADO ->
 
 @startuml
 title SGOM – Diagrama de Casos de Uso • Empresa de Mineração
@@ -1481,3 +1483,5 @@ Auditor -- UC_BaixarEvid
 UC_Auditar ..> UC_AuditoriaTrail : <<include>>
 UC_BaixarEvid ..> UC_Consultar : <<include>>
 @enduml
+
+-->
