@@ -659,7 +659,7 @@ erDiagram
       string unidade_medida
     }
 
-    JAZIDA_MINERAL {  %% tabela de junção
+    JAZIDA_MINERAL { 
       int jazida_id FK
       int mineral_id FK
       string observacao
@@ -748,7 +748,7 @@ erDiagram
       string numero_serie
     }
 
-    EQUIPAMENTO_MINERAL {  %% tabela de junção
+    EQUIPAMENTO_MINERAL {  
       int equipamento_id FK
       int mineral_id FK
     }
