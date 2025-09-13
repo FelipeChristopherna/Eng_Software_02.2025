@@ -560,7 +560,7 @@ Relacionamentos: Modele os relacionamentos entre as entidades, especificando a c
 Coerência: Garanta que o diagrama final represente a estrutura do banco de dados de forma lógica e consistente com as regras de negócio.
 -->
 
-```SQL
+```mermaid
 
 erDiagram
     %% ============================
@@ -867,7 +867,7 @@ Chaves Estrangeiras: Implemente os relacionamentos do diagrama de classe utiliza
 Validação: O script SQL final deve ser sintaticamente correto e pronto para ser executado em um sistema de gerenciamento de banco de dados relacional.
 -->
 
-SET FOREIGN_KEY_CHECKS = 0;
+```SQL
 
 -- =========================
 -- TABELAS PRINCIPAIS
@@ -1307,6 +1307,7 @@ CREATE INDEX idx_lotes_area         ON lotes_producao(area_id);
 CREATE INDEX idx_lotes_mineral      ON lotes_producao(mineral_id);
 CREATE INDEX idx_tq_lote            ON testes_qualidade(lote_id);
 CREATE INDEX idx_dados_timestamp    ON dados_climaticos(timestamp);
+```
 
 ## - [3.3. Diagrama de casos de uso](#33-diagrama-de-casos-de-uso)
 >> Crie um prompt para os casos de uso com PlantUML
