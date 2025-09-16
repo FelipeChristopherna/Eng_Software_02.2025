@@ -11,7 +11,7 @@ Estudo Dirigido - Engenharia de Software
   - [- 3.2. Diagrama ER](#--32-diagrama-er)
   - [- 3.3. Diagrama de casos de uso](#--33-diagrama-de-casos-de-uso)
   - [Diagrama De Caso de uso (SGOM)](#diagrama-de-caso-de-uso-sgom)
-  - [- 3.3. Diagrama de atividade](#--33-diagrama-de-atividade)
+  - [- 3.4. Diagrama de atividade](#--34-diagrama-de-atividade)
 
 ## - [1. Introdução](#1-introdução)
 <!-- >>> Descrever a necessidade de um sistema nessa área em até 2 ou 3 parágrafos. -->
@@ -1518,7 +1518,7 @@ UC_BaixarEvid ..> UC_Consultar : <<include>>
 @enduml
 
 -->
-## - [3.3. Diagrama de atividade](#33-diagrama-de-atividade)
+## - [3.4. Diagrama de atividade](#33-diagrama-de-atividade)
 <!-- >> Crie um prompt para esta seção 
 Função/Persona: Analista de Processos de Negócio.
 
