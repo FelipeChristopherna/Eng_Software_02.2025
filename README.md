@@ -1,17 +1,16 @@
 # Eng_Software_02.2025
 Estudo Dirigido - Engenharia de Software
 
-
-
-
-
-
-
-
-
-
-
-
+- [Eng\_Software\_02.2025](#eng_software_022025)
+  - [- 1. Introdução](#--1-introdução)
+  - [- 2. Descrição](#--2-descrição)
+- [Requisitos do Sistema de Gerenciamento de Operações de Mineração (SGOM)](#requisitos-do-sistema-de-gerenciamento-de-operações-de-mineração-sgom)
+  - [- 2.2. Funcionais e não-funcionais](#--22-funcionais-e-não-funcionais)
+- [Requisitos do Sistema de Gerenciamento de Operações de Mineração (SGOM)](#requisitos-do-sistema-de-gerenciamento-de-operações-de-mineração-sgom-1)
+  - [- 3. Diagramas](#--3-diagramas)
+  - [- 3.2. Diagrama ER](#--32-diagrama-er)
+  - [- 3.3. Diagrama de casos de uso](#--33-diagrama-de-casos-de-uso)
+  - [Diagrama De Caso de uso (SGOM)](#diagrama-de-caso-de-uso-sgom)
 
 ## - [1. Introdução](#1-introdução)
 <!-- >>> Descrever a necessidade de um sistema nessa área em até 2 ou 3 parágrafos. -->
@@ -1518,3 +1517,82 @@ UC_BaixarEvid ..> UC_Consultar : <<include>>
 @enduml
 
 -->
+  - [3.3. Diagrama de atividade](#33-diagrama-de-atividade)
+<!-- >> Crie um prompt para esta seção 
+Função/Persona: Analista de Processos de Negócio.
+
+Objetivo: Criar um Diagrama de Atividade que detalhe o fluxo de um processo de negócio chave do SGOM, utilizando a sintaxe Mermaid dentro de um bloco de código Markdown. O diagrama deve ilustrar o fluxo desde a extração do minério até a sua expedição.
+
+Instruções:
+
+Formato de Saída: A resposta deve ser um único bloco de código Markdown, formatado para Mermaid (\`\`\`mermaid), contendo o diagrama completo. Use a diretiva graph TD (de cima para baixo) para a orientação.
+
+Processo a ser Modelado: O diagrama deve focar no "Fluxo de Extração, Qualidade e Expedição".
+
+Elementos do Diagrama:
+
+Use nós com diferentes formas para representar início/fim (round edges), atividades (rectangle) e decisões (diamond).
+
+Conecte os nós com setas ->.
+
+Para decisões, use setas com texto descritivo (ex: ->|Aprovado|).
+
+Se possível, organize as atividades em raias (swimlanes) usando a sintaxe subgraph para separar as responsabilidades por ator (ex: "Operador", "Técnico de Qualidade").
+
+Clareza: O diagrama deve ser claro, lógico e fácil de seguir, representando fielmente as operações descritas no cenário da empresa.
+-->
+
+```mermaid
+
+graph TD
+%% =======================================================
+%% SGOM - Fluxo de Extração, Qualidade e Expedição (Activity)
+%% Orientação: Top-Down (graph TD) • GitHub-compatible
+%% Formas: ([...]) início/fim (rounded) • [...] atividades (retângulo) • {...} decisão (losango)
+%% =======================================================
+
+%% ---------- Nós de início/fim ----------
+START([Início • Ordem de Lavra Aprovada])
+END([Fim • Lote Expedido])
+
+%% ---------- Raias (Swimlanes) ----------
+subgraph OP["Operador de Maquinário"]
+  OP1[Preparar área e equipamentos]
+  OP2[Executar extração do minério]
+  OP3[Pesagem e criação do Lote de Produção]
+  OP4[Transferir/entregar amostra para Qualidade]
+  OP5[Reprocessar/Ajustar processo de lavra]
+end
+
+subgraph CQ["Técnico de Qualidade"]
+  CQ1[Coletar amostra representativa]
+  CQ2[Executar testes de qualidade]
+  DQ{Lote atende\nnível de pureza padrão?}
+  CQ3[Classificar por nível de pureza]
+  CQ4[Emitir Laudo de Qualidade]
+  CQ5[Emitir Selo de Pureza]
+end
+
+subgraph ENG["Engenheiro de Minas"]
+  EN1[Validar laudo e autorizar expedição]
+  EN2[Registrar valor de mercado na data]
+end
+
+subgraph LOG["Logística / Expedição"]
+  LG1[Armazenar lote em cofre]
+  LG2[Emitir Certificado de Origem]
+  LG3[Preparar documentação de expedição]
+  LG4[Despachar / Expedir lote]
+end
+
+%% ---------- Fluxo principal ----------
+START --> OP1 --> OP2 --> OP3 --> OP4
+OP4 --> CQ1 --> CQ2 --> DQ
+
+%% Decisão de qualidade
+DQ -- Não --> OP5 --> OP2
+DQ -- Sim --> CQ3 --> CQ4 --> CQ5 --> EN1
+
+%% Autorização e preparação para expedição
+EN1 --> EN2 --> LG1 --> LG2 --> LG3 --> LG4 --> END
+```
