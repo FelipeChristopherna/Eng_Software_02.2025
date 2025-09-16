@@ -26,7 +26,7 @@ Diante desse cenário, a implementação de um Sistema de Gerenciamento de Opera
 
 ## - [2. Descrição](#2-descrição)
   - [2.1. Requisitos.](#21-requisitos)
->> Colocar aqui a lista acima!
+<!-- >> Colocar aqui a lista acima! -->
 
 <!-- 
     Prompt: Função/Persona: Você é um Analista de Requisitos Sênior. Sua principal habilidade é traduzir descrições de processos de negócio em requisitos de sistema claros, organizados e acionáveis.
@@ -118,7 +118,7 @@ Exemplo: - [ ] O sistema deve suportar o upload, armazenamento e visualização 
 | RNF010 | Requisitos Não Funcionais                | O sistema deve permitir integração futura com ferramentas de análise de dados e inteligência artificial. |
 
 ##  - [2.2. Funcionais e não-funcionais](#22-funcionais-e-não-funcionais)
->> via prompt, separar os requisitos por tipo (funcional e não funcional), colocar aqui em forma de tabela markdown
+<!-- >> via prompt, separar os requisitos por tipo (funcional e não funcional), colocar aqui em forma de tabela markdown -->
 <!-- 
 Objetivo: Pegar uma lista mista de requisitos de sistema (já elaborada) para o SGOM e classificá-la de forma clara e distinta em duas categorias: Requisitos Funcionais e Requisitos Não Funcionais. O resultado final deve ser um documento Markdown limpo e bem estruturado.
 
@@ -200,7 +200,7 @@ Resultado Esperado: Um único documento Markdown contendo todos os requisitos or
 
 ## - [3. Diagramas](#3-diagramas)
   - [3.1. Diagrama de classe](#31-diagrama-de-classe)
->> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
+<!-- >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid. -->
 
 <!-- 
 Função/Persona: Você é um Arquiteto de Software Sênior, especializado em modelagem de dados e design de sistemas. Sua tarefa é traduzir um complexo cenário de negócios em um Diagrama de Classe UML claro e preciso.
@@ -552,7 +552,7 @@ Camera "1" *-- "0..*" Midia
 ```
 
 ## - [3.2. Diagrama ER](#32-diagrama-er)
->> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
+<!-- >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid. -->
 
 <!-- 
   Função/Persona: Analista de Banco de Dados Sênior.
@@ -855,7 +855,7 @@ erDiagram
     }
 ```
 
->> Crie um prompt para que o diagrama de classe vire comandos CREATE TABLE e coloque nos anexos! No final deste documento.
+<!-- >> Crie um prompt para que o diagrama de classe vire comandos CREATE TABLE e coloque nos anexos! No final deste documento. -->
 
 <!-- 
   Função/Persona: Engenheiro de Banco de Dados.
@@ -1322,7 +1322,7 @@ CREATE INDEX idx_dados_timestamp    ON dados_climaticos(timestamp);
 ```
 
 ## - [3.3. Diagrama de casos de uso](#33-diagrama-de-casos-de-uso)
->> Crie um prompt para os casos de uso com PlantUML
+<!-- >> Crie um prompt para os casos de uso com PlantUML -->
 
   ## Diagrama De Caso de uso (SGOM)
   ![Diagrama De casos de uso](Arquivos/Diagrama.UML.png)
@@ -1518,4 +1518,3 @@ UC_BaixarEvid ..> UC_Consultar : <<include>>
 @enduml
 
 -->
-
