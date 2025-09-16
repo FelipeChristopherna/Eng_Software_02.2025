@@ -1542,8 +1542,6 @@ Se possível, organize as atividades em raias (swimlanes) usando a sintaxe subgr
 Clareza: O diagrama deve ser claro, lógico e fácil de seguir, representando fielmente as operações descritas no cenário da empresa.
 -->
 
-```mermaid
-
 graph TD
 %% =======================================================
 %% SGOM - Fluxo de Extração, Qualidade e Expedição (Activity)
@@ -1595,4 +1593,3 @@ DQ -- Sim --> CQ3 --> CQ4 --> CQ5 --> EN1
 
 %% Autorização e preparação para expedição
 EN1 --> EN2 --> LG1 --> LG2 --> LG3 --> LG4 --> END
-```
