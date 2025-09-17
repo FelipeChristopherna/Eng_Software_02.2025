@@ -1606,89 +1606,48 @@ EN1 --> EN2 --> LG1 --> LG2 --> LG3 --> LG4 --> END
 ```mermaid
 
 graph TD
-%% SGOM – Diagrama de Componentes (Arquitetura Lógico-Funcional)
-%% Atores, Módulos de Negócio e Módulos de Suporte
+    subgraph "Atores do Sistema"
+        actor1["Engenheiro de Minas"]
+        actor2["Gestor Ambiental"]
+        actor3["Técnico de Qualidade"]
+        actor4["Operador"]
+        actor5["Administrador"]
+    end
 
-%% ---------------------------
-%% Atores (externos ao sistema)
-%% ---------------------------
-subgraph AT["Atores (Externos)"]
-  A1[Engenheiro de Minas]
-  A2[Gestor Ambiental]
-  A3[Técnico de Qualidade]
-  A4[Operador]
-  A5[Administrador]
-end
+    subgraph "Módulos de Negócio (SGOM)"
+        component1["Gestão de Áreas/Jazidas"]
+        component2["Registro de Atividade de Lavra"]
+        component3["Controle de Qualidade"]
+        component4["Logística e Expedição"]
+        component5["Monitoramento Ambiental"]
+    end
 
-%% ---------------------------
-%% Módulos de Negócio
-%% ---------------------------
-subgraph NEG["Domínio do Negócio"]
-  M1[Gestão de Áreas/Jazidas]
-  M2[Registro de Atividade de Lavra]
-  M3[Controle de Qualidade]
-  M4[Logística e Expedição]
-  M5[Monitoramento Ambiental]
-end
+    subgraph "Módulos de Suporte"
+        component6["Gestão de Documentos"]
+        component7["Administração do Sistema"]
+        component8["Relatórios e Análise"]
+    end
 
-%% ---------------------------
-%% Módulos de Suporte
-%% ---------------------------
-subgraph SUP["Suporte ao Negócio"]
-  S1[Gestão de Documentos]
-  S2[Administração do Sistema]
-  S3[Relatórios e Análise]
-end
+    %% Relações Atores -> Módulos
+    actor1 --> component1
+    actor1 --> component2
+    actor2 --> component5
+    actor3 --> component3
+    actor4 --> component2
+    actor4 --> component4
+    actor5 --> component7
 
-%% ---------------------------
-%% Interações: Atores -> Módulos
-%% ---------------------------
-A1 --> M1
-A1 --> M2
-A1 --> M3
-A1 --> M4
-
-A2 --> M5
-A2 --> M1
-
-A3 --> M3
-
-A4 --> M2
-A4 --> M4
-
-A5 --> S2
-A5 --> S1
-
-%% ---------------------------
-%% Dependências entre Módulos de Negócio
-%% ---------------------------
-M2 -->|usa áreas, licenças, coordenadas| M1
-M3 -->|lê lotes e amostras| M2
-M4 -->|liberação conforme pureza/selos| M3
-M4 -->|consome dados de produção| M2
-M5 -->|relaciona fauna/flora/mapas às áreas| M1
-
-%% ---------------------------
-%% Dependências com Módulos de Suporte
-%% ---------------------------
-M1 -->|laudos, licenças, mapas| S1
-M2 -->|ordens, pesagens| S1
-M3 -->|laudos e certificados| S1
-M4 -->|documentos de expedição| S1
-M5 -->|relatórios e mapas| S1
-
-M1 --> S3
-M2 --> S3
-M3 --> S3
-M4 --> S3
-M5 --> S3
-
-S2 <-- M1
-S2 <-- M2
-S2 <-- M3
-S2 <-- M4
-S2 <-- M5
-S2 <-- S1
-S2 <-- S3
+    %% Relações entre Módulos
+    component2 --> component1
+    component3 --> component2
+    component4 --> component3
+    component5 --> component1
+    component8 --> component1
+    component8 --> component2
+    component8 --> component3
+    component8 --> component4
+    component8 --> component5
+    component1 --> component6
+    component5 --> component6
 
 ```
