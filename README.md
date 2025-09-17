@@ -26,7 +26,7 @@ Diante desse cenário, a implementação de um Sistema de Gerenciamento de Opera
 
 ## - [2. Descrição](#2-descrição)
   - [2.1. Requisitos.](#21-requisitos)
->> Colocar aqui a lista acima!
+<!-- >> Colocar aqui a lista acima! -->
 
 <!-- 
     Prompt: Função/Persona: Você é um Analista de Requisitos Sênior. Sua principal habilidade é traduzir descrições de processos de negócio em requisitos de sistema claros, organizados e acionáveis.
@@ -118,7 +118,7 @@ Exemplo: - [ ] O sistema deve suportar o upload, armazenamento e visualização 
 | RNF010 | Requisitos Não Funcionais                | O sistema deve permitir integração futura com ferramentas de análise de dados e inteligência artificial. |
 
 ##  - [2.2. Funcionais e não-funcionais](#22-funcionais-e-não-funcionais)
->> via prompt, separar os requisitos por tipo (funcional e não funcional), colocar aqui em forma de tabela markdown
+<!-- >> via prompt, separar os requisitos por tipo (funcional e não funcional), colocar aqui em forma de tabela markdown -->
 <!-- 
 Objetivo: Pegar uma lista mista de requisitos de sistema (já elaborada) para o SGOM e classificá-la de forma clara e distinta em duas categorias: Requisitos Funcionais e Requisitos Não Funcionais. O resultado final deve ser um documento Markdown limpo e bem estruturado.
 
@@ -200,7 +200,7 @@ Resultado Esperado: Um único documento Markdown contendo todos os requisitos or
 
 ## - [3. Diagramas](#3-diagramas)
   - [3.1. Diagrama de classe](#31-diagrama-de-classe)
->> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
+<!-- >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid. -->
 
 <!-- 
 Função/Persona: Você é um Arquiteto de Software Sênior, especializado em modelagem de dados e design de sistemas. Sua tarefa é traduzir um complexo cenário de negócios em um Diagrama de Classe UML claro e preciso.
@@ -552,7 +552,7 @@ Camera "1" *-- "0..*" Midia
 ```
 
 ## - [3.2. Diagrama ER](#32-diagrama-er)
->> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
+<!-- >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid. -->
 
 <!-- 
   Função/Persona: Analista de Banco de Dados Sênior.
@@ -855,7 +855,7 @@ erDiagram
     }
 ```
 
->> Crie um prompt para que o diagrama de classe vire comandos CREATE TABLE e coloque nos anexos! No final deste documento.
+<!-- >> Crie um prompt para que o diagrama de classe vire comandos CREATE TABLE e coloque nos anexos! No final deste documento. -->
 
 <!-- 
   Função/Persona: Engenheiro de Banco de Dados.
@@ -1322,7 +1322,7 @@ CREATE INDEX idx_dados_timestamp    ON dados_climaticos(timestamp);
 ```
 
 ## - [3.3. Diagrama de casos de uso](#33-diagrama-de-casos-de-uso)
->> Crie um prompt para os casos de uso com PlantUML
+<!-- >> Crie um prompt para os casos de uso com PlantUML -->
 
   ## Diagrama De Caso de uso (SGOM)
   ![Diagrama De casos de uso](Arquivos/Diagrama.UML.png)
@@ -1518,4 +1518,82 @@ UC_BaixarEvid ..> UC_Consultar : <<include>>
 @enduml
 
 -->
+## - [3.4. Diagrama de atividade](#33-diagrama-de-atividade)
+<!-- >> Crie um prompt para esta seção 
+Função/Persona: Analista de Processos de Negócio.
 
+Objetivo: Criar um Diagrama de Atividade que detalhe o fluxo de um processo de negócio chave do SGOM, utilizando a sintaxe Mermaid dentro de um bloco de código Markdown. O diagrama deve ilustrar o fluxo desde a extração do minério até a sua expedição.
+
+Instruções:
+
+Formato de Saída: A resposta deve ser um único bloco de código Markdown, formatado para Mermaid (\`\`\`mermaid), contendo o diagrama completo. Use a diretiva graph TD (de cima para baixo) para a orientação.
+
+Processo a ser Modelado: O diagrama deve focar no "Fluxo de Extração, Qualidade e Expedição".
+
+Elementos do Diagrama:
+
+Use nós com diferentes formas para representar início/fim (round edges), atividades (rectangle) e decisões (diamond).
+
+Conecte os nós com setas ->.
+
+Para decisões, use setas com texto descritivo (ex: ->|Aprovado|).
+
+Se possível, organize as atividades em raias (swimlanes) usando a sintaxe subgraph para separar as responsabilidades por ator (ex: "Operador", "Técnico de Qualidade").
+
+Clareza: O diagrama deve ser claro, lógico e fácil de seguir, representando fielmente as operações descritas no cenário da empresa.
+-->
+
+```mermaid
+
+graph TD
+%% =======================================================
+%% SGOM - Fluxo de Extração, Qualidade e Expedição (Activity)
+%% Orientação: Top-Down (graph TD) • GitHub-compatible
+%% Formas: ([...]) início/fim (rounded) • [...] atividades (retângulo) • {...} decisão (losango)
+%% =======================================================
+
+%% ---------- Nós de início/fim ----------
+START([Início • Ordem de Lavra Aprovada])
+END([Fim • Lote Expedido])
+
+%% ---------- Raias (Swimlanes) ----------
+subgraph OP["Operador de Maquinário"]
+  OP1[Preparar área e equipamentos]
+  OP2[Executar extração do minério]
+  OP3[Pesagem e criação do Lote de Produção]
+  OP4[Transferir/entregar amostra para Qualidade]
+  OP5[Reprocessar/Ajustar processo de lavra]
+end
+
+subgraph CQ["Técnico de Qualidade"]
+  CQ1[Coletar amostra representativa]
+  CQ2[Executar testes de qualidade]
+  DQ{Lote atende\nnível de pureza padrão?}
+  CQ3[Classificar por nível de pureza]
+  CQ4[Emitir Laudo de Qualidade]
+  CQ5[Emitir Selo de Pureza]
+end
+
+subgraph ENG["Engenheiro de Minas"]
+  EN1[Validar laudo e autorizar expedição]
+  EN2[Registrar valor de mercado na data]
+end
+
+subgraph LOG["Logística / Expedição"]
+  LG1[Armazenar lote em cofre]
+  LG2[Emitir Certificado de Origem]
+  LG3[Preparar documentação de expedição]
+  LG4[Despachar / Expedir lote]
+end
+
+%% ---------- Fluxo principal ----------
+START --> OP1 --> OP2 --> OP3 --> OP4
+OP4 --> CQ1 --> CQ2 --> DQ
+
+%% Decisão de qualidade
+DQ -- Não --> OP5 --> OP2
+DQ -- Sim --> CQ3 --> CQ4 --> CQ5 --> EN1
+
+%% Autorização e preparação para expedição
+EN1 --> EN2 --> LG1 --> LG2 --> LG3 --> LG4 --> END
+```
