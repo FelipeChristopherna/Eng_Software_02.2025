@@ -12,7 +12,8 @@ Estudo Dirigido - Engenharia de Software
   - [- 3.3. Diagrama de casos de uso](#--33-diagrama-de-casos-de-uso)
   - [Diagrama De Caso de uso (SGOM)](#diagrama-de-caso-de-uso-sgom)
   - [- 3.4. Diagrama de atividade](#--34-diagrama-de-atividade)
-  - [- 3.4. Diagrama de Componentes](#--34-diagrama-de-componentes)
+  - [- 3.5. Diagrama de Componentes](#--35-diagrama-de-componentes)
+  - [- 3.6. Diagrama de implantação](#--36-diagrama-de-implantação)
 
 
 ## - [1. Introdução](#1-introdução)
@@ -1600,8 +1601,30 @@ DQ -- Sim --> CQ3 --> CQ4 --> CQ5 --> EN1
 EN1 --> EN2 --> LG1 --> LG2 --> LG3 --> LG4 --> END
 ```
 
-##  - [3.4. Diagrama de Componentes](#34-diagrama-de-componentes)
+##  - [3.5. Diagrama de Componentes](#34-diagrama-de-componentes)
 <!-- >>> Crie um prompt para esta seção -->
+
+<!-- 
+  Função/Persona: Arquiteto de Software.
+
+Objetivo: Criar um Diagrama de Componentes para o SGOM, ilustrando a arquitetura lógico-funcional do sistema. O diagrama deve focar nos principais módulos de negócio, nos atores que interagem com eles e nas relações entre esses módulos, usando a sintaxe Mermaid.
+
+Instruções:
+
+Formato de Saída: A resposta deve ser um único bloco de código Markdown, formatado para Mermaid (```mermaid).
+
+Identificação de Componentes: Com base no cenário completo da mineradora, identifique os principais módulos funcionais e atores como componentes do sistema. A estrutura deve ser orientada ao negócio. Considere:
+
+Atores: [Engenheiro de Minas], [Gestor Ambiental], [Técnico de Qualidade], [Operador], [Administrador].
+
+Módulos Funcionais (Negócio): [Gestão de Áreas/Jazidas], [Registro de Atividade de Lavra], [Controle de Qualidade], [Logística e Expedição], [Monitoramento Ambiental].
+
+Módulos de Suporte: [Gestão de Documentos], [Administração do Sistema], [Relatórios e Análise].
+
+Relações e Interfaces: Utilize setas (->) para mostrar como os atores interagem com os módulos funcionais e como os próprios módulos se comunicam ou dependem uns dos outros (ex: o módulo de Logística depende das informações do Controle de Qualidade).
+
+Clareza: O diagrama deve fornecer uma visão clara da estrutura funcional do sistema, destacando a separação de responsabilidades e facilitando o entendimento de como as diferentes partes do negócio são suportadas pelo software.
+-->
 
 ```mermaid
 
@@ -1693,5 +1716,112 @@ graph TD
     S2 -- "Gerencia configurações e acessos" --> M5
     S2 -- "Gerencia configurações e acessos" --> S1
     S2 -- "Gerencia configurações e acessos" --> S3
+
+```
+
+##  - [3.6. Diagrama de implantação](#35-diagrama-de-implantação)
+<!-- >> Crie um prompt para esta seção -->
+
+<!-- 
+Função/Persona: Arquiteto de Infraestrutura / DevOps.
+
+Objetivo: Criar um Diagrama de Implantação para o SGOM, detalhando a arquitetura física e a distribuição dos componentes de software nos nós de hardware. O diagrama deve ser gerado usando a sintaxe Mermaid.
+
+Instruções:
+
+Formato de Saída: A resposta deve ser um único bloco de código Markdown, formatado para Mermaid (```mermaid), utilizando um grafo (graph TD ou graph LR).
+
+Infraestrutura Principal: Modele o ambiente de nuvem (Cloud) como um contêiner principal (usando subgraph). Dentro dele, inclua os seguintes nós de servidor:
+
+Servidor Web / Frontend
+
+Servidor de Aplicação / Backend (API)
+
+Servidor de Banco de Dados (PostgreSQL/SQL Server)
+
+Servidor de Armazenamento (Storage para PDFs, Mapas, Imagens)
+
+Servidor de Processamento (Para Visão Computacional)
+
+Dispositivos de Usuário: Represente os dispositivos que os usuários utilizarão para acessar o sistema. Inclua:
+
+Desktop / Notebook (Engenheiros, Gestores, Admin)
+
+Tablet / Dispositivo Móvel (Operadores em campo)
+
+Sistemas Externos: Inclua o Sistema Externo de Meteorologia como um nó fora da infraestrutura principal.
+
+Conexões: Use setas (->) para ilustrar as conexões de rede. Mostre como os dispositivos dos usuários se conectam à aplicação (via HTTPS) e como os componentes internos (servidores) se comunicam entre si.
+-->
+
+```mermaid
+
+graph LR
+    %% =======================================================
+    %% SGOM – Diagrama de Implantação (Infraestrutura/DevOps)
+    %% Corrigido para Clareza e Compatibilidade
+    %% =======================================================
+
+    %% ---------------------------
+    %% Atores e Sistemas Externos
+    %% ---------------------------
+    subgraph "Fontes de Acesso"
+        direction TB
+        U1["Desktop/Notebook<br/>(Engenheiros, Gestores, Admin)"]
+        U2["Tablet / Dispositivo Móvel<br/>(Operadores em campo)"]
+    end
     
+    subgraph "Sistemas de Terceiros"
+        WX["Sistema Externo<br/>de Meteorologia"]
+    end
+
+    %% ---------------------------
+    %% Infraestrutura em Nuvem
+    %% ---------------------------
+    subgraph "Cloud (VPC / Resource Group)"
+        direction LR
+        
+        %% Camada de Borda e Entrada
+        subgraph "Edge & Ingress"
+            direction TB
+            CDN["WAF / CDN"]
+            GW["API Gateway / Ingress"]
+        end
+
+        %% Camada de Aplicação
+        subgraph "Application Layer"
+            direction TB
+            FE["Servidor Web / Frontend<br/>(SPA/SSR)"]
+            BE["Servidor de Aplicação / Backend<br/>(API)"]
+        end
+
+        %% Camada de Dados e Processamento
+        subgraph "Data & Processing Layer"
+            direction TB
+            DB[("Servidor de Banco de Dados<br/>(PostgreSQL / SQL Server)")]
+            STG[("Servidor de Armazenamento<br/>(Object Storage – PDFs/Mapas/Imagens)")]
+            PROC["Servidor de Processamento<br/>(Visão Computacional)"]
+        end
+
+        %% Fluxos de Comunicação Interna
+        FE --> |"HTTPS (API Calls)"| BE
+        BE --> |JDBC/SQL| DB
+        BE --> |"S3/Blob API"| STG
+        BE --> |"gRPC/AMQP"| PROC
+        PROC --> |"S3/Blob API"| STG
+        PROC --> |"JDBC/SQL (Resultados)"| DB
+    end
+
+    %% ---------------------------
+    %% Fluxos de Rede (Conexões)
+    %% ---------------------------
+    
+    %% Fluxo do Usuário para a Aplicação
+    U1 -- "HTTPS: 443" --> CDN
+    U2 -- "HTTPS: 443" --> CDN
+    CDN -- "HTTPS: 443" --> GW
+    GW -- "HTTPS: 443" --> FE
+    
+    %% Fluxo de Sistema Externo
+    WX -- "HTTPS/Webhook: 443" --> BE
 ```
