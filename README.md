@@ -1,16 +1,16 @@
 # Eng_Software_02.2025
 Estudo Dirigido - Engenharia de Software
 
-
-
-
-
-
-
-
-
-
-
+- [Eng\_Software\_02.2025](#eng_software_022025)
+  - [- 1. Introdução](#--1-introdução)
+  - [- 2. Descrição](#--2-descrição)
+- [Requisitos do Sistema de Gerenciamento de Operações de Mineração (SGOM)](#requisitos-do-sistema-de-gerenciamento-de-operações-de-mineração-sgom)
+  - [- 2.2. Funcionais e não-funcionais](#--22-funcionais-e-não-funcionais)
+- [Requisitos do Sistema de Gerenciamento de Operações de Mineração (SGOM)](#requisitos-do-sistema-de-gerenciamento-de-operações-de-mineração-sgom-1)
+  - [- 3. Diagramas](#--3-diagramas)
+  - [- 3.2. Diagrama ER](#--32-diagrama-er)
+  - [- 3.3. Diagrama de casos de uso](#--33-diagrama-de-casos-de-uso)
+  - [Diagrama De Caso de uso (SGOM)](#diagrama-de-caso-de-uso-sgom)
 
 
 ## - [1. Introdução](#1-introdução)
