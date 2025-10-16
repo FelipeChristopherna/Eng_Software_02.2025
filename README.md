@@ -60,7 +60,7 @@ Estudo Dirigido - Engenharia de Software
     - [Feature 11.1: Registro de Areia e Cascalho](#feature-111-registro-de-areia-e-cascalho)
 - [- 4.1. Jornada do usuário](#--41-jornada-do-usuário)
 - [Jornada do Usuário — Persona: Técnico de Qualidade](#jornada-do-usuário--persona-técnico-de-qualidade)
-  - [- 3.8. Diagrama ER](#--38-diagrama-er)
+  - [- 3.8. Codigo SQL](#--38-codigo-sql)
 
 
 ## - [1. Introdução](#1-introdução)
@@ -2123,7 +2123,7 @@ Fonte de Informação: Baseie toda a narrativa da jornada no contexto e nas oper
 | Finalização e Auditoria | Revisa a trilha completa (lotes, testes, selos, cofre, certificados, documentos anexos); garante que tudo está pronto para auditorias. | “Consigo reconstruir o histórico do lote de ponta a ponta.” | Documentos espalhados; dificuldade em localizar evidências rapidamente. | Linha do tempo do lote (do campo ao certificado); busca unificada por código de lote/área/data; exportação de dossiê do lote em PDF. |
 
 
-## - [3.8. Diagrama ER](#32-diagrama-er)
+## - [3.8. Codigo SQL](#32-Codigo-sql)
 
 <!-- >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
  >> Crie um prompt para que o diagrama de classe vire comandos CREATE TABLE e coloque nos anexos! No final deste documento. -->
