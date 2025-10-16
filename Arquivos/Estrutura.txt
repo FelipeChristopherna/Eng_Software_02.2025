@@ -55,12 +55,6 @@ Até aqui: Avaliação 2.
   - [5. Protótipo de telas](#5-protótipo-de-telas)
 >> Crie um prompt para as telas do sistema
 
-<!---
-coloque aqui o seu prompt
--->
-
-Resposta...
-
   - [6. Diagrama de navegação de tela](#6-diagrama-de-navegação-de-tela)
 >> Crie um prompt para mostrar como estão conectadas as telas
 

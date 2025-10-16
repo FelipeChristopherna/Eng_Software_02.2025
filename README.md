@@ -8,13 +8,59 @@ Estudo Dirigido - Engenharia de Software
   - [- 2.2. Funcionais e não-funcionais](#--22-funcionais-e-não-funcionais)
   - [Requisitos do Sistema de Gerenciamento de Operações de Mineração (SGOM)](#requisitos-do-sistema-de-gerenciamento-de-operações-de-mineração-sgom-1)
 - [- 3.0. Diagramas](#--30-diagramas)
+  - [- 3.1. Diagrama de classe](#--31-diagrama-de-classe)
   - [- 3.2. Diagrama ER](#--32-diagrama-er)
   - [- 3.3. Diagrama de casos de uso](#--33-diagrama-de-casos-de-uso)
   - [Diagrama De Caso de uso (SGOM)](#diagrama-de-caso-de-uso-sgom)
   - [- 3.4. Diagrama de atividade](#--34-diagrama-de-atividade)
   - [- 3.5. Diagrama de Componentes](#--35-diagrama-de-componentes)
   - [- 3.6. Diagrama de implantação](#--36-diagrama-de-implantação)
-  - [- 3.7. Diagrama ER](#--37-diagrama-er)
+- [3.7. Diagramas C4](#37-diagramas-c4)
+  - [-3.7.1. Diagrama C4 de contexto.](#-371-diagrama-c4-de-contexto)
+  - [-3.7.2. Diagrama C4 de contêiner.](#-372-diagrama-c4-de-contêiner)
+  - [-3.7.3. Diagrama C4 de componente.](#-373-diagrama-c4-de-componente)
+  - [-3.7.4. Diagrama C4 de código.](#-374-diagrama-c4-de-código)
+    - [3.7.4.1. Interfaces principais. (Contratos de Services)](#3741-interfaces-principais-contratos-de-services)
+    - [3.7.4.2 DTOs essenciais](#3742-dtos-essenciais)
+    - [3.7.4.3 Políticas e utilitários de domínio](#3743-políticas-e-utilitários-de-domínio)
+    - [3.7.4.4 Ports (repositórios)](#3744-ports-repositórios)
+    - [3.7.4.5 Implementação do Service (exemplo: Registrar Teste de Qualidade)](#3745-implementação-do-service-exemplo-registrar-teste-de-qualidade)
+    - [3.7.4.6 Exceções e Mapper](#3746-exceções-e-mapper)
+    - [3.7.4.7 Testes (esqueleto)](#3747-testes-esqueleto)
+  - [-4. Histórias de usuário](#-4-histórias-de-usuário)
+- [Backlog do Sistema de Gerenciamento de Operações de Mineração (SGOM)](#backlog-do-sistema-de-gerenciamento-de-operações-de-mineração-sgom)
+  - [Épico 1: Gestão de Áreas e Jazidas](#épico-1-gestão-de-áreas-e-jazidas)
+    - [Feature 1.1: Cadastro de Áreas e Jazidas](#feature-11-cadastro-de-áreas-e-jazidas)
+    - [Feature 1.2: Mapas e Visualização Geoespacial](#feature-12-mapas-e-visualização-geoespacial)
+  - [Épico 2: Operações de Lavra e Produção](#épico-2-operações-de-lavra-e-produção)
+    - [Feature 2.1: Registro de Atividades de Lavra](#feature-21-registro-de-atividades-de-lavra)
+    - [Feature 2.2: Controle de Produção](#feature-22-controle-de-produção)
+    - [Feature 2.3: Expedição e Cofre](#feature-23-expedição-e-cofre)
+  - [Épico 3: Controle de Qualidade](#épico-3-controle-de-qualidade)
+    - [Feature 3.1: Testes de Qualidade](#feature-31-testes-de-qualidade)
+    - [Feature 3.2: Certificação](#feature-32-certificação)
+    - [Feature 3.3: Análise por Visão Computacional](#feature-33-análise-por-visão-computacional)
+  - [Épico 4: Gestão Ambiental](#épico-4-gestão-ambiental)
+    - [Feature 4.1: Monitoramento de Fauna e Flora](#feature-41-monitoramento-de-fauna-e-flora)
+    - [Feature 4.2: Recuperação de Áreas Degradadas](#feature-42-recuperação-de-áreas-degradadas)
+  - [Épico 5: Gestão de Equipamentos e Veículos](#épico-5-gestão-de-equipamentos-e-veículos)
+    - [Feature 5.1: Cadastro de Maquinário e Veículos](#feature-51-cadastro-de-maquinário-e-veículos)
+  - [Épico 6: Gestão de Pessoal](#épico-6-gestão-de-pessoal)
+    - [Feature 6.1: Cadastro de Funcionários](#feature-61-cadastro-de-funcionários)
+  - [Épico 7: Gestão Documental](#épico-7-gestão-documental)
+    - [Feature 7.1: Armazenamento de Documentos](#feature-71-armazenamento-de-documentos)
+  - [Épico 8: Monitoramento Meteorológico](#épico-8-monitoramento-meteorológico)
+    - [Feature 8.1: Coleta de Dados Climáticos](#feature-81-coleta-de-dados-climáticos)
+  - [Épico 9: Prospecção e Expansão](#épico-9-prospecção-e-expansão)
+    - [Feature 9.1: Prospecção de Novas Áreas](#feature-91-prospecção-de-novas-áreas)
+  - [Épico 10: Segurança e Auditoria](#épico-10-segurança-e-auditoria)
+    - [Feature 10.1: Monitoramento por Câmeras](#feature-101-monitoramento-por-câmeras)
+    - [Feature 10.2: Auditoria Operacional](#feature-102-auditoria-operacional)
+  - [Épico 11: Subprodutos da Mineração](#épico-11-subprodutos-da-mineração)
+    - [Feature 11.1: Registro de Areia e Cascalho](#feature-111-registro-de-areia-e-cascalho)
+- [- 4.1. Jornada do usuário](#--41-jornada-do-usuário)
+- [Jornada do Usuário — Persona: Técnico de Qualidade](#jornada-do-usuário--persona-técnico-de-qualidade)
+  - [- 3.8. Diagrama ER](#--38-diagrama-er)
 
 
 ## - [1. Introdução](#1-introdução)
@@ -203,7 +249,8 @@ Resultado Esperado: Um único documento Markdown contendo todos os requisitos or
 | RNF010 | Não Funcional        | O sistema deve permitir integração futura com ferramentas de análise de dados e inteligência artificial. |
 
 # - [3.0. Diagramas](#3-diagramas)
-- [3.1. Diagrama de classe](#3.1-diagrama-de-classe)
+
+## - [3.1. Diagrama de classe](#3.1-diagrama-de-classe)
 <!-- >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid. -->
 
 <!-- 
@@ -1362,7 +1409,721 @@ graph LR
     WX -- "HTTPS/Webhook: 443" --> BE
 ```
 
-## - [3.7. Diagrama ER](#32-diagrama-er)
+# [3.7. Diagramas C4](#36-diagramas-c4)
+<!-- Crie um prompt para esta seção para os 4 tipos de diagramas C4 -->
+
+## -[3.7.1. Diagrama C4 de contexto.](#361-diagrama-c4-de-contexto)
+<!-- 
+    Função/Persona: Arquiteto de Software.
+
+Objetivo: Criar o Diagrama de Contexto (Nível 1 do C4 Model) para o SGOM. O diagrama deve mostrar o sistema como uma "caixa preta" no centro, os usuários (atores) que interagem com ele e os sistemas externos dos quais ele depende ou com os quais se integra. A saída deve ser em formato Mermaid.
+
+Instruções:
+
+Formato de Saída: A resposta deve ser um único bloco de código Markdown, formatado para Mermaid (```mermaid), utilizando um grafo (graph TD).
+
+Sistema Central: Represente o "Sistema de Gerenciamento de Operações de Mineração (SGOM)" como o nó principal no centro do diagrama.
+
+Atores (Usuários): Identifique os principais grupos de usuários que interagem diretamente com o sistema. Inclua pelo menos: Engenheiro de Minas, Gestor Ambiental, Técnico de Qualidade, Operador e Administrador.
+
+Sistemas Externos: Identifique os sistemas externos com os quais o SGOM se comunica. Inclua o Sistema de Meteorologia.
+
+Relações: Use setas para mostrar as interações, adicionando um breve descritivo a cada seta (ex: Usa para registrar dados, Envia dados climáticos para).
+-->
+```mermaid
+
+      graph TD
+  %% =============== Sistema Central (Caixa-Preta) ===============
+  SGOM[["Sistema de Gerenciamento de Operações de Mineração (SGOM)"]]
+
+  %% =============== Atores (Usuários) ===============
+  subgraph Atores
+    direction TB
+    Eng((Engenheiro de Minas))
+    Gest((Gestor Ambiental))
+    Tec((Técnico de Qualidade))
+    Oper((Operador))
+    Admin((Administrador))
+  end
+
+  %% =============== Sistemas Externos ===============
+  subgraph "Sistemas Externos"
+    direction TB
+    Meteo["Sistema de Meteorologia"]
+    GIS["Sistema de Mapas / GIS"]
+    DMS["Repositório de Documentos (PDF/Laudos)"]
+    CCTV["CFTV / Armazenamento de Imagens"]
+    Lab["Sistema de Análise de Qualidade (Laboratório / Visão Computacional)"]
+    Scale["Balança / Weighbridge"]
+    ERP["ERP / Financeiro"]
+    ANM["Órgãos Reguladores (ex.: ANM)"]
+  end
+
+  %% =============== Interações: Atores -> SGOM ===============
+  Eng  -- "Usa para planejar lavra e acompanhar produção" --> SGOM
+  Gest -- "Usa para registrar e consultar indicadores ambientais" --> SGOM
+  Tec  -- "Usa para registrar testes de qualidade por lote" --> SGOM
+  Oper -- "Usa para reportar atividades de lavra e expedição" --> SGOM
+  Admin -- "Usa para gerir usuários, perfis e parâmetros" --> SGOM
+
+  %% =============== Interações: Sistemas Externos <-> SGOM ===============
+  Meteo -- "Envia dados climáticos (chuva/vento/temp.) para" --> SGOM
+  SGOM  -- "Consulta previsões/alertas para análises operacionais em" --> Meteo
+
+  GIS   -- "Fornece/recebe camadas e mapas geoespaciais de/para" --> SGOM
+  DMS   -- "Armazena e versiona PDFs, laudos e licenças de" --> SGOM
+  CCTV  -- "Disponibiliza evidências visuais para auditorias de" --> SGOM
+  Lab   -- "Retorna resultados de ensaios e classificação de pureza para" --> SGOM
+  Scale -- "Envia registros de pesagem (entrada/saída) para" --> SGOM
+  SGOM  -- "Exporta ordens, produção e custos para" --> ERP
+  SGOM  -- "Envia relatórios e dados regulatórios para" --> ANM
+  ```
+
+## -[3.7.2. Diagrama C4 de contêiner.](#362-diagrama-c4-de-contêiner)
+<!-- 
+    Função/Persona: Arquiteto de Software.
+
+Objetivo: Criar o Diagrama de Contêiner (Nível 2 do C4 Model) para o SGOM. Este diagrama deve "abrir a caixa preta" do sistema e mostrar os principais contêineres (aplicações, bancos de dados, storages) que o compõem. A saída deve ser em formato Mermaid.
+
+Instruções:
+
+Formato de Saída: A resposta deve ser um único bloco de código Markdown, formatado para Mermaid (```mermaid).
+
+Delimitação do Sistema: Utilize um subgraph para representar a fronteira do "SGOM".
+
+Contêineres Principais: Dentro do subgraph, identifique os principais contêineres do sistema. Considere:
+
+Aplicação Web (Frontend): A interface com o usuário, construída em React/Angular/Vue.
+
+API REST (Backend): O cérebro do sistema, expondo os serviços de negócio.
+
+Banco de Dados Relacional: Onde os dados estruturados (produção, usuários, etc.) são armazenados.
+
+Sistema de Armazenamento de Arquivos: Para guardar PDFs, mapas e imagens.
+
+Serviço de Análise de Imagens: Um contêiner específico para o processamento de visão computacional.
+
+Relações: Mostre como os contêineres se comunicam entre si e como os atores e sistemas externos (definidos no C1) interagem com eles, incluindo o protocolo (ex: HTTPS, JDBC).
+-->
+
+```mermaid
+
+graph LR
+  %% =================== Atores (Usuários) ===================
+  Eng((Engenheiro de Minas))
+  Gest((Gestor Ambiental))
+  Tec((Técnico de Qualidade))
+  Oper((Operador))
+  Admin((Administrador))
+
+  %% =================== Sistemas Externos ===================
+  Meteo["Sistema de Meteorologia"]
+  GIS["Sistema de Mapas / GIS"]
+  DMS["Repositório de Documentos externo"]
+  CCTV["CFTV / Armazenamento de Imagens externo"]
+  Lab["Sistema de Análise de Qualidade (Laboratório)"]
+  Scale["Balança / Weighbridge"]
+  ERP["ERP / Financeiro"]
+  ANM["Órgãos Reguladores (ex.: ANM)"]
+
+  %% =================== Fronteira do Sistema (SGOM) ===================
+  subgraph SGOM["SGOM — Sistema de Gerenciamento de Operações de Mineração"]
+    direction TB
+    WebUI["Aplicação Web (Frontend)\nReact / Angular / Vue"]
+    API["API REST (Backend)\nServiços de Negócio"]
+    DB[(Banco de Dados Relacional\nPostgreSQL · MySQL)]
+    Files["Armazenamento de Arquivos · Objetos\nPDFs · Mapas · Imagens"]
+    Vision["Serviço de Análise de Imagens\nVisão Computacional"]
+  end
+
+  %% =================== Relações: Usuários -> SGOM ===================
+  Eng   -- "HTTPS · Planeja lavra e acompanha produção" --> WebUI
+  Gest  -- "HTTPS · Registra/consulta indicadores ambientais" --> WebUI
+  Tec   -- "HTTPS · Registra testes de qualidade por lote" --> WebUI
+  Oper  -- "HTTPS · Reporta atividades de lavra/expedição" --> WebUI
+  Admin -- "HTTPS · Administra usuários, perfis e parâmetros" --> WebUI
+
+  %% =================== Relações Internas dos Contêineres ===================
+  WebUI -- "HTTPS/JSON" --> API
+  API   -- "JWT/OAuth2" --> WebUI
+  API   -- "JDBC/ORM" --> DB
+  API   -- "S3 API / HTTPS" --> Files
+  API   -- "gRPC / HTTP" --> Vision
+  Vision -- "S3 API / HTTPS · Lê/Grava artefatos" --> Files
+
+  %% =================== Integrações Externas ===================
+  Meteo -- "HTTPS / Webhooks · Dados climáticos" --> API
+  GIS   -- "HTTPS (WMS/WFS) · Camadas geoespaciais" --> API
+  DMS   -- "WebDAV / SFTP / HTTPS · Importa/Exporta documentos" --> API
+  CCTV  -- "RTSP / HTTPS · Capturas e evidências" --> API
+  Lab   -- "HTTPS · Resultados de ensaios e laudos" --> API
+  Scale -- "MQTT / HTTPS · Registros de pesagem" --> API
+  API   -- "HTTPS · Ordens, produção e custos" --> ERP
+  API   -- "HTTPS · Relatórios e dados regulatórios" --> ANM
+```
+
+## -[3.7.3. Diagrama C4 de componente.](#363-diagrama-c4-de-componente)
+<!-- 
+  Função/Persona: Arquiteto de Software.
+
+Objetivo: Criar o Diagrama de Componente (Nível 3 do C4 Model) para um contêiner específico do SGOM, o API REST (Backend). O diagrama deve detalhar os principais componentes internos e suas responsabilidades. A saída deve ser em formato Mermaid.
+
+Instruções:
+
+Formato de Saída: A resposta deve ser um único bloco de código Markdown, formatado para Mermaid (```mermaid).
+
+Escopo: O diagrama deve focar exclusivamente no contêiner API REST (Backend). Utilize um subgraph para delimitá-lo.
+
+Componentes Internos: Identifique os principais componentes lógicos dentro da API. Considere uma arquitetura padrão, como:
+
+Controller de Operações: Recebe requisições relacionadas à lavra.
+
+Controller de Qualidade: Recebe requisições de testes de pureza.
+
+Controller Ambiental: Recebe requisições de monitoramento.
+
+Módulo de Lógica de Negócio (Services): Contém as regras de negócio.
+
+Módulo de Acesso a Dados (Repositories): Responsável pela comunicação com o banco de dados.
+
+Módulo de Segurança: Lida com autenticação e autorização.
+
+Relações: Mostre o fluxo de uma requisição, por exemplo, da Aplicação Web para um Controller, que utiliza um Service, que por sua vez usa um Repository para acessar o Banco de Dados.
+-->
+
+```mermaid
+
+    graph LR
+  %% =================== Contexto Externo ===================
+  WebUI["Aplicação Web (Frontend)"]
+  DB[(Banco de Dados Relacional)]
+
+  %% =================== Contêiner Focado ===================
+  subgraph API["API REST - Backend (SGOM)"]
+    direction TB
+
+    %% ---- Infra / Cross-cutting ----
+    Security["Módulo de Segurança · Autenticação/Autorização"]
+
+    %% ---- Controllers ----
+    subgraph Controllers["Camada de Controllers"]
+      direction TB
+      CtrlOps["Controller de Operações"]
+      CtrlQual["Controller de Qualidade"]
+      CtrlAmb["Controller Ambiental"]
+    end
+
+    %% ---- Services ----
+    subgraph Services["Camada de Serviços (Regras de Negócio)"]
+      direction TB
+      SvcOps["Service de Operações"]
+      SvcQual["Service de Qualidade"]
+      SvcAmb["Service Ambiental"]
+    end
+
+    %% ---- Repositories ----
+    subgraph Repos["Camada de Acesso a Dados (Repositories)"]
+      direction TB
+      RepoProd["Repository · Produção/Lavra"]
+      RepoQual["Repository · Ensaios/Qualidade"]
+      RepoAmb["Repository · Indicadores Ambientais"]
+    end
+  end
+
+  %% =================== Fluxo de Requisições ===================
+  %% Entrada -> Middleware de Segurança -> Controllers
+  WebUI -- "HTTPS · JSON" --> Security
+  Security -. "Middleware · Verifica token/roles" .-> CtrlOps
+  Security -. "Middleware · Verifica token/roles" .-> CtrlQual
+  Security -. "Middleware · Verifica token/roles" .-> CtrlAmb
+
+  %% Controllers -> Services
+  CtrlOps  -- "Chama" --> SvcOps
+  CtrlQual -- "Chama" --> SvcQual
+  CtrlAmb  -- "Chama" --> SvcAmb
+
+  %% Services -> Repositories
+  SvcOps  -- "Consulta/Grava" --> RepoProd
+  SvcQual -- "Consulta/Grava" --> RepoQual
+  SvcAmb  -- "Consulta/Grava" --> RepoAmb
+
+  %% Repositories -> DB
+  RepoProd -- "JDBC/ORM" --> DB
+  RepoQual -- "JDBC/ORM" --> DB
+  RepoAmb  -- "JDBC/ORM" --> DB
+```
+
+## -[3.7.4. Diagrama C4 de código.](#364-diagrama-c4-de-código)
+<!--
+ Função/Persona: Desenvolvedor Sênior.
+
+Objetivo: Elaborar uma descrição textual que represente o Nível 4 (Código) do C4 Model para um componente específico: o Módulo de Lógica de Negócio (Services) dentro da API REST. A descrição deve focar em como as responsabilidades seriam implementadas em código.
+
+Instruções:
+
+Formato de Saída: A resposta deve ser em texto, utilizando listas e blocos de código em Markdown para exemplificar.
+
+Escopo: A análise deve se concentrar no componente Módulo de Lógica de Negócio (Services).
+
+Estrutura: Descreva a estrutura de classes ou módulos que implementariam a lógica de negócio.
+
+Exemplo Prático: Escolha um fluxo de negócio, como "Registrar Teste de Qualidade", e descreva as principais classes, métodos e interações envolvidas. Por exemplo:
+
+QualidadeService.java: Classe principal.
+
+public Certificado registrarTeste(DadosTesteDTO dados): Método que recebe os dados, valida as regras de negócio (ex: verifica se o lote existe), calcula o nível de pureza e chama o repositório para salvar os dados.
+
+TabelaPureza.java: Uma classe de suporte ou enum para os padrões de pureza.
+
+Clareza: O objetivo não é escrever o código completo, mas sim dar uma visão clara de como a arquitetura de componentes se traduziria em código real.
+-->
+### 3.7.4.1. Interfaces principais. (Contratos de Services)
+
+```java
+
+  public interface QualidadeService {
+    CertificadoDTO registrarTeste(DadosTesteDTO dados);
+    CertificadoDTO reprocessarCalculo(UUID idTeste);
+    Optional<CertificadoDTO> consultarCertificadoPorLote(String codigoLote);
+}
+```
+
+### 3.7.4.2 DTOs essenciais
+
+```java
+  public record DadosTesteDTO(
+    String codigoLote,
+    String materialCodigo,
+    BigDecimal massaAmostra,        // g
+    BigDecimal massaSoluto,         // g (ou concentração)
+    String unidadeMedida,           // "g", "mg", "ppm"
+    LocalDateTime dataColeta,
+    String responsavelColeta,
+    String metodoAnalitico          // ex.: "ICP-OES", "XRF"
+) {}
+
+public record CertificadoDTO(
+    UUID idCertificado,
+    String codigoLote,
+    BigDecimal purezaPercentual,    // ex.: 98.73
+    String classePureza,            // Tabela/Enum
+    String status,                  // "APROVADO", "REPROVADO", "CONDITIONAL"
+    LocalDateTime emitidoEm,
+    String emitidoPor
+) {}
+
+```
+
+### 3.7.4.3 Políticas e utilitários de domínio
+
+- Tabela de pureza (classificação):
+
+```java
+
+  public enum TabelaPureza {
+    A(99.5, 100.0, "APROVADO"),
+    B(98.0, 99.5, "CONDITIONAL"),
+    C(0.0,  98.0, "REPROVADO");
+
+    private final double minIncl;
+    private final double maxExcl;
+    private final String statusDefault;
+
+    TabelaPureza(double minIncl, double maxExcl, String statusDefault) {
+        this.minIncl = minIncl; this.maxExcl = maxExcl; this.statusDefault = statusDefault;
+    }
+
+    public static TabelaPureza classificar(double purezaPercentual) {
+        for (var t : values()) {
+            if (purezaPercentual >= t.minIncl && purezaPercentual < t.maxExcl) return t;
+        }
+        throw new IllegalArgumentException("Pureza fora de faixa: " + purezaPercentual);
+    }
+
+    public String statusDefault() { return statusDefault; }
+}
+```
+
+- Cálculo de pureza (simplificado):
+
+```java
+
+  public final class CalculoPurezaPolicy {
+    private CalculoPurezaPolicy() {}
+
+    // Ex.: pureza% = (massaSoluto / massaAmostra) * 100, com conversões
+    public static BigDecimal calcularPurezaPercentual(BigDecimal massaAmostra, BigDecimal massaSoluto, String unidade) {
+        BigDecimal solutoEmGramas = UnidadeConversor.paraGramas(massaSoluto, unidade);
+        if (massaAmostra.signum() <= 0) throw new IllegalArgumentException("Massa da amostra deve ser > 0");
+        return solutoEmGramas.divide(massaAmostra, 6, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100));
+    }
+}
+```
+
+- Conversor de unidades (exemplo):
+  
+```java
+
+  final class UnidadeConversor {
+    static BigDecimal paraGramas(BigDecimal valor, String unidade) {
+        return switch (unidade.toLowerCase()) {
+            case "g"   -> valor;
+            case "mg"  -> valor.divide(BigDecimal.valueOf(1000), 6, RoundingMode.HALF_UP);
+            case "kg"  -> valor.multiply(BigDecimal.valueOf(1000));
+            case "ppm" -> valor.divide(BigDecimal.valueOf(10_000), 6, RoundingMode.HALF_UP); // simplificado
+            default -> throw new IllegalArgumentException("Unidade não suportada: " + unidade);
+        };
+    }
+}
+```
+
+### 3.7.4.4 Ports (repositórios)
+
+```java
+
+  public interface LoteRepository {
+    Optional<Lote> findByCodigo(String codigo);
+}
+
+public interface TesteQualidadeRepository {
+    TesteQualidade save(TesteQualidade teste);
+    Optional<TesteQualidade> findById(UUID id);
+    Optional<TesteQualidade> findByCodigoLote(String codigoLote);
+}
+
+public interface CertificadoRepository {
+    Certificado save(Certificado certificado);
+    Optional<Certificado> findByCodigoLote(String codigoLote);
+}
+```
+
+### 3.7.4.5 Implementação do Service (exemplo: Registrar Teste de Qualidade)
+
+```java
+
+  @Service
+@RequiredArgsConstructor
+public class QualidadeServiceImpl implements QualidadeService {
+
+    private final LoteRepository loteRepo;
+    private final TesteQualidadeRepository testeRepo;
+    private final CertificadoRepository certRepo;
+    private final QualidadeMapper mapper;
+    private final Clock clock;
+    private final TransactionalExecutor tx;
+    private final IdempotencyGuard idempotency;
+
+    @Override
+    public CertificadoDTO registrarTeste(DadosTesteDTO dados) {
+        // Idempotência por (lote + dataColeta + responsável)
+        String key = "qualidade:registrar:" + dados.codigoLote() + ":" + dados.dataColeta() + ":" + dados.responsavelColeta();
+        return idempotency.run(key, () -> tx.required(() -> registrarFluxo(dados)));
+    }
+
+    private CertificadoDTO registrarFluxo(DadosTesteDTO dados) {
+        // 1) Lote deve existir
+        Lote lote = loteRepo.findByCodigo(dados.codigoLote())
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Lote não encontrado: " + dados.codigoLote()));
+
+        // 2) Validações de regra (domínio)
+        RegraAmostragem.validar(lote, dados.dataColeta());
+
+        // 3) Cálculo e classificação
+        BigDecimal pureza = CalculoPurezaPolicy.calcularPurezaPercentual(
+            dados.massaAmostra(), dados.massaSoluto(), dados.unidadeMedida());
+        double p = pureza.setScale(2, RoundingMode.HALF_UP).doubleValue();
+        TabelaPureza classe = TabelaPureza.classificar(p);
+        String status = classe.statusDefault();
+
+        // 4) Persistir Teste
+        TesteQualidade teste = TesteQualidade.novo(
+            lote.getCodigo(), dados.metodoAnalitico(), dados.responsavelColeta(), dados.dataColeta(), pureza);
+        teste = testeRepo.save(teste);
+
+        // 5) Emitir Certificado
+        Certificado cert = Certificado.emitir(
+            teste.getId(), lote.getCodigo(), pureza, classe.name(), status, clock.now(), "SGOM");
+        cert = certRepo.save(cert);
+
+        // 6) Evento de domínio
+        TesteQualidadeRegistrado evento = new TesteQualidadeRegistrado(teste.getId(), lote.getCodigo(), pureza);
+        evento.publicar();
+
+        // 7) Retorno
+        return mapper.toDTO(cert);
+    }
+
+    @Override
+    public CertificadoDTO reprocessarCalculo(UUID idTeste) {
+        return tx.required(() -> {
+            TesteQualidade teste = testeRepo.findById(idTeste)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Teste não encontrado: " + idTeste));
+
+            BigDecimal pureza = CalculoPurezaPolicy.calcularPurezaPercentual(
+                teste.getMassaAmostra(), teste.getMassaSoluto(), teste.getUnidadeMedida());
+
+            double p = pureza.setScale(2, RoundingMode.HALF_UP).doubleValue();
+            TabelaPureza classe = TabelaPureza.classificar(p);
+            String status = classe.statusDefault();
+
+            Certificado cert = certRepo.findByCodigoLote(teste.getCodigoLote())
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Certificado não encontrado para lote: " + teste.getCodigoLote()));
+
+            cert.atualizar(pureza, classe.name(), status, clock.now(), "REPROCESS");
+            cert = certRepo.save(cert);
+            return mapper.toDTO(cert);
+        });
+    }
+
+    @Override
+    public Optional<CertificadoDTO> consultarCertificadoPorLote(String codigoLote) {
+        return certRepo.findByCodigoLote(codigoLote).map(mapper::toDTO);
+    }
+}
+```
+
+### 3.7.4.6 Exceções e Mapper
+
+- Exceções de negócio:
+  
+```java
+
+  public class NegocioException extends RuntimeException { public NegocioException(String msg) { super(msg); } }
+public class RecursoNaoEncontradoException extends RuntimeException { public RecursoNaoEncontradoException(String msg) { super(msg); } }
+public class ViolacaoRegraException extends NegocioException { public ViolacaoRegraException(String msg) { super(msg); } }
+```
+
+- Mapper (Domínio → DTO):
+
+```java
+
+  @Component
+public class QualidadeMapper {
+    public CertificadoDTO toDTO(Certificado cert) {
+        return new CertificadoDTO(
+            cert.getId(), cert.getCodigoLote(),
+            cert.getPurezaPercentual().setScale(2, RoundingMode.HALF_UP),
+            cert.getClassePureza(), cert.getStatus(),
+            cert.getEmitidoEm(), cert.getEmitidoPor()
+        );
+    }
+}
+```
+
+### 3.7.4.7 Testes (esqueleto)
+
+```java
+
+  @ExtendWith(SpringExtension.class)
+class QualidadeServiceImplTest {
+
+    @Mock LoteRepository loteRepo;
+    @Mock TesteQualidadeRepository testeRepo;
+    @Mock CertificadoRepository certRepo;
+    @Mock QualidadeMapper mapper;
+    @Mock Clock clock;
+    @Mock TransactionalExecutor tx;
+    @Mock IdempotencyGuard idempotency;
+
+    @InjectMocks QualidadeServiceImpl service;
+
+    @Test
+    void deveRegistrarTesteComSucesso() {
+        // arrange: mocks de lote, save, clock...
+        // act: service.registrarTeste(dados)
+        // assert: verificações de persistência e retorno do DTO
+    }
+}
+
+```
+
+## -[4. Histórias de usuário](#4-histórias-de-usuário)
+
+<!-- 
+Função/Persona: Analista de Requisitos.
+
+Objetivo: Gerar um backlog de produto para o SGOM, estruturando os requisitos como Histórias de Usuário organizadas em Épicos e Features.
+
+Instruções:
+
+Formato: Utilize Markdown para criar a estrutura hierárquica:
+
+# para Épicos
+
+## para Features
+
+Itens de lista (-) para as Histórias de Usuário.
+
+Padrão da História de Usuário: Todas as histórias devem seguir o formato:
+
+Como um <tipo de usuário>, eu quero <realizar uma ação> para que <eu possa alcançar um objetivo>.
+
+Fonte dos Requisitos: Baseie-se exclusivamente na descrição detalhada da empresa de mineração para identificar todos os épicos, features e histórias.
+-->
+
+# Backlog do Sistema de Gerenciamento de Operações de Mineração (SGOM)
+
+---
+
+## Épico 1: Gestão de Áreas e Jazidas
+
+### Feature 1.1: Cadastro de Áreas e Jazidas
+- Como um **engenheiro de minas**, eu quero **cadastrar as áreas de exploração com suas coordenadas geográficas** para que **seja possível identificar e delimitar cada jazida**.
+- Como um **gestor ambiental**, eu quero **registrar as áreas de reserva legal e de uso administrativo** para que **as operações respeitem os limites ambientais e legais**.
+- Como um **administrador do sistema**, eu quero **associar os tipos de minérios (ouro, zinco, dolomito, casiterita) a cada jazida** para que **a produção seja gerenciada corretamente**.
+
+### Feature 1.2: Mapas e Visualização Geoespacial
+- Como um **geólogo**, eu quero **armazenar mapas (altimétrico, hídrico, geomorfológico, topográfico)** para que **possa consultar e analisar as condições da área**.
+- Como um **usuário do sistema**, eu quero **visualizar no mapa as áreas de extração, pátios e reservas** para que **tenha uma visão geográfica das operações**.
+
+---
+
+## Épico 2: Operações de Lavra e Produção
+
+### Feature 2.1: Registro de Atividades de Lavra
+- Como um **operador de campo**, eu quero **registrar cada atividade de lavra com data, hora, responsável e local** para que **as operações sejam documentadas e rastreáveis**.
+- Como um **gestor de produção**, eu quero **atribuir códigos únicos para cada atividade de lavra** para que **o controle operacional seja preciso**.
+
+### Feature 2.2: Controle de Produção
+- Como um **engenheiro de produção**, eu quero **registrar a produção diária de cada área** para que **possa acompanhar o desempenho das jazidas**.
+- Como um **analista financeiro**, eu quero **registrar o valor do minério produzido na data da extração** para que **possa calcular o faturamento diário**.
+- Como um **gestor de logística**, eu quero **acompanhar o status dos lotes produzidos até a expedição final** para que **tenha controle total sobre o fluxo de materiais**.
+
+### Feature 2.3: Expedição e Cofre
+- Como um **responsável pela expedição**, eu quero **registrar a guarda dos minérios em cofres** para que **haja segurança até a saída da empresa**.
+- Como um **supervisor de expedição**, eu quero **associar o nome do responsável pela expedição ao lote** para que **a rastreabilidade do material seja garantida**.
+
+---
+
+## Épico 3: Controle de Qualidade
+
+### Feature 3.1: Testes de Qualidade
+- Como um **técnico de laboratório**, eu quero **registrar os testes de qualidade com informações sobre área, peso e volume** para que **os resultados sejam armazenados e comparáveis**.
+- Como um **analista de controle de qualidade**, eu quero **aplicar uma tabela de padrões para definir o nível de pureza** para que **os minérios possam receber um selo de qualidade**.
+
+### Feature 3.2: Certificação
+- Como um **gestor comercial**, eu quero **emitir certificados de origem e pureza** para que **o cliente tenha garantia da procedência e qualidade do minério**.
+
+### Feature 3.3: Análise por Visão Computacional
+- Como um **especialista em visão computacional**, eu quero **automatizar a verificação do nível de pureza** para que **o processo seja mais rápido e preciso**.
+
+---
+
+## Épico 4: Gestão Ambiental
+
+### Feature 4.1: Monitoramento de Fauna e Flora
+- Como um **biólogo**, eu quero **registrar as espécies animais e árvores da região** para que **haja um controle da biodiversidade local**.
+- Como um **gestor ambiental**, eu quero **consultar o inventário de fauna e flora** para que **possa elaborar relatórios de conformidade ambiental**.
+
+### Feature 4.2: Recuperação de Áreas Degradadas
+- Como um **engenheiro florestal**, eu quero **registrar ações de plantio em áreas exauridas** para que **o processo de recuperação ambiental seja acompanhado**.
+
+---
+
+## Épico 5: Gestão de Equipamentos e Veículos
+
+### Feature 5.1: Cadastro de Maquinário e Veículos
+- Como um **técnico de manutenção**, eu quero **registrar os equipamentos e veículos utilizados** para que **haja controle de uso e manutenção**.
+- Como um **engenheiro responsável**, eu quero **associar cada equipamento a um tipo de minério** para que **o uso seja adequado à operação de lavra**.
+
+---
+
+## Épico 6: Gestão de Pessoal
+
+### Feature 6.1: Cadastro de Funcionários
+- Como um **administrador de RH**, eu quero **cadastrar os funcionários e suas funções** para que **possa gerenciar as equipes da mineradora**.
+- Como um **gestor de operações**, eu quero **atribuir engenheiros responsáveis às áreas de mineração** para que **haja controle técnico das atividades**.
+
+---
+
+## Épico 7: Gestão Documental
+
+### Feature 7.1: Armazenamento de Documentos
+- Como um **usuário administrativo**, eu quero **armazenar arquivos PDF (laudos, relatórios, licenças)** para que **toda a documentação fique centralizada e acessível**.
+
+---
+
+## Épico 8: Monitoramento Meteorológico
+
+### Feature 8.1: Coleta de Dados Climáticos
+- Como um **técnico ambiental**, eu quero **registrar dados da estação meteorológica (chuva, temperatura, umidade)** para que **possa correlacionar com a produção minerária**.
+- Como um **analista de dados**, eu quero **relacionar os dados climáticos com a produção das áreas** para que **possa identificar padrões e influências ambientais**.
+
+---
+
+## Épico 9: Prospecção e Expansão
+
+### Feature 9.1: Prospecção de Novas Áreas
+- Como um **geólogo**, eu quero **registrar ações de prospecção de novos minérios** para que **as descobertas e amostras fiquem documentadas para futuras operações**.
+
+---
+
+## Épico 10: Segurança e Auditoria
+
+### Feature 10.1: Monitoramento por Câmeras
+- Como um **gerente de segurança**, eu quero **instalar e registrar as câmeras nas áreas de mineração** para que **as imagens sejam armazenadas para auditorias futuras**.
+
+### Feature 10.2: Auditoria Operacional
+- Como um **auditor interno**, eu quero **consultar os registros de operações, lotes e imagens** para que **possa verificar a conformidade das atividades da mineradora**.
+
+---
+
+## Épico 11: Subprodutos da Mineração
+
+### Feature 11.1: Registro de Areia e Cascalho
+- Como um **operador de produção**, eu quero **registrar a produção de areia e cascalho** para que **esses subprodutos sejam contabilizados e gerenciados adequadamente**.
+
+---
+
+**Observações Gerais:**
+- Todos os módulos devem respeitar a LGPD, garantindo segurança e rastreabilidade dos dados.
+- O sistema deve permitir integração futura com ferramentas de análise e visualização de dados (BI).
+- O SGOM deverá ser multiusuário, com controle de acesso baseado em perfis (operador, engenheiro, gestor, auditor, administrador).
+
+
+# - [4.1. Jornada do usuário](#42-jornada-do-usuário)
+<!-- 
+  Função/Persona: UX Designer / Product Manager.
+
+Objetivo: Mapear a Jornada do Usuário para uma das personas chave do SGOM, descrevendo passo a passo sua interação com o sistema para atingir um objetivo específico.
+
+Instruções:
+
+Escolha de Persona e Cenário: Selecione uma persona central (ex: Engenheiro de Minas, Gestor Ambiental ou Técnico de Qualidade) e um cenário relevante (ex: "Registrar a produção de um dia e iniciar o processo de controle de qualidade").
+
+Formato de Saída: Utilize uma tabela em Markdown para estruturar a jornada de forma clara.
+
+Estrutura da Jornada: A tabela deve conter as seguintes colunas:
+
+Fase: As etapas macro da jornada (ex: Planejamento, Execução, Análise, Finalização).
+
+Ações do Usuário: O que o usuário faz em cada fase.
+
+Pensamentos e Sentimentos: O que passa pela cabeça do usuário (ex: "Isso é complicado", "Será que não esqueci nada?", "Ótimo, rápido e fácil").
+
+Pontos de Dor: As frustrações e dificuldades encontradas pelo usuário.
+
+Oportunidades para o Sistema: Como o SGOM pode resolver os pontos de dor ou melhorar a experiência.
+
+Fonte de Informação: Baseie toda a narrativa da jornada no contexto e nas operações descritas no documento da empresa de mineração.
+-->
+
+# Jornada do Usuário — Persona: Técnico de Qualidade
+**Cenário:** Registrar a produção do dia e iniciar o processo de controle de qualidade (com rastreabilidade por lote e preparação para expedição e certificação)
+
+| Fase | Ações do Usuário | Pensamentos e Sentimentos | Pontos de Dor | Oportunidades para o Sistema |
+|---|---|---|---|---|
+| Planejamento | Verifica no SGOM as áreas ativas de lavra no dia e os lotes gerados (com código, data/hora, responsável e área). Revisa o plano de amostragem por tipo de minério (ouro, zinco, dolomito, casiterita). | “Quero começar pelos lotes com maior volume.” “Preciso garantir que nenhum lote fique sem teste.” | Dificuldade em priorizar lotes quando há muitos registros no dia; risco de esquecer algum lote. | Painel de priorização por volume/valor do minério e SLA de testes; filtros por área/minério; sinalização de “lotes pendentes de teste”. |
+| Execução (Coleta e Registro) | Recebe as amostras do pátio de pesagem, confere identificação do lote e registra no SGOM: área, volume e peso. Valida dados do registro de produção diário e valor do minério na data. | “Os dados batem com a pesagem?” “Tudo bem identificado?” | Erros de digitação; etiquetas danificadas ou ilegíveis; divergências entre pesagem e registro. | Leitura por QR/RFID do lote; validação automática com dados de produção e pesagem; alertas de inconsistência; upload de foto da etiqueta no momento do registro. |
+| Controle de Qualidade (Laboratório) | Executa testes de pureza conforme tabela de padrões; registra responsável, data, resultados (peso, volume, pureza) e decide se o lote recebe selo. Anexa laudos (PDF). | “Resultado dentro do padrão?” “Se reprovar, qual ação de retrabalho?” | Comparar manualmente com a tabela de padrões; retrabalho pouco guiado; documentação dispersa. | Motor de regras que calcula o nível de pureza e recomenda aprovação/reprovação; geração automática de laudo-modelo; campos obrigatórios guiados; versionamento de laudos. |
+| Verificação por Visão Computacional | Envia imagens/amostras para verificação automatizada; compara resultado da máquina com o do especialista. | “Os resultados coincidem?” “Se divergirem, qual prevalece?” | Divergência entre análises; falta de trilha de auditoria clara. | Tela de conciliação humano × IA com explicabilidade básica; política configurável de desempate/segunda amostra; trilha de auditoria com hashes e timestamps. |
+| Expedição e Cofre | Após aprovação, registra guarda do lote em cofre, responsável e localização; prepara lote para expedição quando solicitado. | “Este lote já pode seguir?” “Quem está responsável pelo cofre?” | Falta de visibilidade do status (em cofre, liberado, em trânsito); risco de erro humano na troca de responsáveis. | Workflow visual de status do lote; confirmação com duplo fator na mudança de custódia; checklist de expedição integrado. |
+| Certificação | Solicita/gera certificado de origem e pureza para o lote aprovado; associa ao lote e torna disponível ao comercial. | “Certificado pronto e anexado?” | Retrabalho ao preencher certificados; risco de documento fora do padrão. | Geração automática do certificado com dados do lote; modelos padronizados; assinatura digital e código de verificação. |
+| Análise e Correlação Climática | Consulta dashboard relacionando dados meteorológicos (ex.: pluviometria) com resultados de qualidade e produção do dia/área. | “A chuva afetou a pureza?” | Correlações manuais demoradas; dados climáticos fora de contexto. | Gráficos de correlação por área/minério/período; insights automáticos (ex.: “redução de pureza em dias com >X mm de chuva”). |
+| Finalização e Auditoria | Revisa a trilha completa (lotes, testes, selos, cofre, certificados, documentos anexos); garante que tudo está pronto para auditorias. | “Consigo reconstruir o histórico do lote de ponta a ponta.” | Documentos espalhados; dificuldade em localizar evidências rapidamente. | Linha do tempo do lote (do campo ao certificado); busca unificada por código de lote/área/data; exportação de dossiê do lote em PDF. |
+
+
+## - [3.8. Diagrama ER](#32-diagrama-er)
 
 <!-- >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
  >> Crie um prompt para que o diagrama de classe vire comandos CREATE TABLE e coloque nos anexos! No final deste documento. -->
