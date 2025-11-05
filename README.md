@@ -2025,7 +2025,7 @@ Certificado de Origem (upload PDF)
 
 O protótipo deve refletir o ambiente de um sistema corporativo de mineração, com foco em controle, registro e rastreabilidade da produção mineral.
 -->
-
+![Protótipo de telas](Arquivos/Prototipo.crud.png)
 
 
 ## - [10. Codigo SQL](#32-Codigo-sql)
