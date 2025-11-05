@@ -20,13 +20,6 @@ Estudo Dirigido - Engenharia de Software
   - [-3.7.2. Diagrama C4 de contêiner.](#-372-diagrama-c4-de-contêiner)
   - [-3.7.3. Diagrama C4 de componente.](#-373-diagrama-c4-de-componente)
   - [-3.7.4. Diagrama C4 de código.](#-374-diagrama-c4-de-código)
-    - [3.7.4.1. Interfaces principais. (Contratos de Services)](#3741-interfaces-principais-contratos-de-services)
-    - [3.7.4.2 DTOs essenciais](#3742-dtos-essenciais)
-    - [3.7.4.3 Políticas e utilitários de domínio](#3743-políticas-e-utilitários-de-domínio)
-    - [3.7.4.4 Ports (repositórios)](#3744-ports-repositórios)
-    - [3.7.4.5 Implementação do Service (exemplo: Registrar Teste de Qualidade)](#3745-implementação-do-service-exemplo-registrar-teste-de-qualidade)
-    - [3.7.4.6 Exceções e Mapper](#3746-exceções-e-mapper)
-    - [3.7.4.7 Testes (esqueleto)](#3747-testes-esqueleto)
   - [-4. Histórias de usuário](#-4-histórias-de-usuário)
 - [Backlog do Sistema de Gerenciamento de Operações de Mineração (SGOM)](#backlog-do-sistema-de-gerenciamento-de-operações-de-mineração-sgom)
   - [Épico 1: Gestão de Áreas e Jazidas](#épico-1-gestão-de-áreas-e-jazidas)
@@ -60,7 +53,8 @@ Estudo Dirigido - Engenharia de Software
     - [Feature 11.1: Registro de Areia e Cascalho](#feature-111-registro-de-areia-e-cascalho)
 - [- 4.1. Jornada do usuário](#--41-jornada-do-usuário)
 - [Jornada do Usuário — Persona: Técnico de Qualidade](#jornada-do-usuário--persona-técnico-de-qualidade)
-  - [- 3.8. Codigo SQL](#--38-codigo-sql)
+  - [- 5. Protótipo de telas](#--5-protótipo-de-telas)
+  - [- 10. Codigo SQL](#--10-codigo-sql)
 
 
 ## - [1. Introdução](#1-introdução)
@@ -1654,287 +1648,126 @@ Relações: Mostre o fluxo de uma requisição, por exemplo, da Aplicação Web 
 ```
 
 ## -[3.7.4. Diagrama C4 de código.](#364-diagrama-c4-de-código)
-<!--
- Função/Persona: Desenvolvedor Sênior.
+<!-- 
+  Função/Persona: Arquiteto de Software / Desenvolvedor Sênior.
 
-Objetivo: Elaborar uma descrição textual que represente o Nível 4 (Código) do C4 Model para um componente específico: o Módulo de Lógica de Negócio (Services) dentro da API REST. A descrição deve focar em como as responsabilidades seriam implementadas em código.
+Objetivo: Criar um Diagrama de Código (Nível 4 do C4 Model) para um componente específico do SGOM, detalhando a sua estrutura interna de classes e interfaces.
 
 Instruções:
 
-Formato de Saída: A resposta deve ser em texto, utilizando listas e blocos de código em Markdown para exemplificar.
+Foco: Escolha um componente detalhado do Diagrama C4 de Contêiner (Nível 2) ou de Componentes (Nível 3). (Ex: o componente de "Gestão de Lotes" ou "Controlo de Qualidade").
 
-Escopo: A análise deve se concentrar no componente Módulo de Lógica de Negócio (Services).
+Formato: O diagrama deve ser um Diagrama de Classe utilizing a sintaxe Mermaid.
 
-Estrutura: Descreva a estrutura de classes ou módulos que implementariam a lógica de negócio.
+Conteúdo: O diagrama deve mostrar as principais classes, interfaces, atributos e métodos que implementam a funcionalidade do componente escolhido.
 
-Exemplo Prático: Escolha um fluxo de negócio, como "Registrar Teste de Qualidade", e descreva as principais classes, métodos e interações envolvidas. Por exemplo:
+Base de Requisitos: As classes e métodos devem refletir as necessidades de negócio descritas no documento da empresa de mineração.
 
-QualidadeService.java: Classe principal.
+Exemplo de Sintaxe (Mermaid):
 
-public Certificado registrarTeste(DadosTesteDTO dados): Método que recebe os dados, valida as regras de negócio (ex: verifica se o lote existe), calcula o nível de pureza e chama o repositório para salvar os dados.
+Snippet de código
 
-TabelaPureza.java: Uma classe de suporte ou enum para os padrões de pureza.
-
-Clareza: O objetivo não é escrever o código completo, mas sim dar uma visão clara de como a arquitetura de componentes se traduziria em código real.
--->
-### 3.7.4.1. Interfaces principais. (Contratos de Services)
-
-```java
-
-  public interface QualidadeService {
-    CertificadoDTO registrarTeste(DadosTesteDTO dados);
-    CertificadoDTO reprocessarCalculo(UUID idTeste);
-    Optional<CertificadoDTO> consultarCertificadoPorLote(String codigoLote);
-}
-```
-
-### 3.7.4.2 DTOs essenciais
-
-```java
-  public record DadosTesteDTO(
-    String codigoLote,
-    String materialCodigo,
-    BigDecimal massaAmostra,        // g
-    BigDecimal massaSoluto,         // g (ou concentração)
-    String unidadeMedida,           // "g", "mg", "ppm"
-    LocalDateTime dataColeta,
-    String responsavelColeta,
-    String metodoAnalitico          // ex.: "ICP-OES", "XRF"
-) {}
-
-public record CertificadoDTO(
-    UUID idCertificado,
-    String codigoLote,
-    BigDecimal purezaPercentual,    // ex.: 98.73
-    String classePureza,            // Tabela/Enum
-    String status,                  // "APROVADO", "REPROVADO", "CONDITIONAL"
-    LocalDateTime emitidoEm,
-    String emitidoPor
-) {}
-
-```
-
-### 3.7.4.3 Políticas e utilitários de domínio
-
-- Tabela de pureza (classificação):
-
-```java
-
-  public enum TabelaPureza {
-    A(99.5, 100.0, "APROVADO"),
-    B(98.0, 99.5, "CONDITIONAL"),
-    C(0.0,  98.0, "REPROVADO");
-
-    private final double minIncl;
-    private final double maxExcl;
-    private final String statusDefault;
-
-    TabelaPureza(double minIncl, double maxExcl, String statusDefault) {
-        this.minIncl = minIncl; this.maxExcl = maxExcl; this.statusDefault = statusDefault;
+classDiagram
+    direction LR
+    class GestorLotes {
+        +string loteId
+        +criarLote(data, areaId) Lote
+        +registrarTesteQualidade(loteId, resultado)
     }
-
-    public static TabelaPureza classificar(double purezaPercentual) {
-        for (var t : values()) {
-            if (purezaPercentual >= t.minIncl && purezaPercentual < t.maxExcl) return t;
-        }
-        throw new IllegalArgumentException("Pureza fora de faixa: " + purezaPercentual);
+    class Lote {
+        -string id
+        -date dataExtracao
+        -string tipoMineral
+        -float peso
+        +getDetalhes() object
     }
-
-    public String statusDefault() { return statusDefault; }
-}
-```
-
-- Cálculo de pureza (simplificado):
-
-```java
-
-  public final class CalculoPurezaPolicy {
-    private CalculoPurezaPolicy() {}
-
-    // Ex.: pureza% = (massaSoluto / massaAmostra) * 100, com conversões
-    public static BigDecimal calcularPurezaPercentual(BigDecimal massaAmostra, BigDecimal massaSoluto, String unidade) {
-        BigDecimal solutoEmGramas = UnidadeConversor.paraGramas(massaSoluto, unidade);
-        if (massaAmostra.signum() <= 0) throw new IllegalArgumentException("Massa da amostra deve ser > 0");
-        return solutoEmGramas.divide(massaAmostra, 6, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100));
+    class IRepositorioLotes {
+        <<interface>>
+        +buscarPorId(id) Lote
+        +salvar(lote) bool
     }
-}
-```
+    GestorLotes -> IRepositorioLotes : "usa"
+    GestorLotes ..> Lote : "cria/manipula" 
+--> 
 
-- Conversor de unidades (exemplo):
-  
-```java
+```mermaid
 
-  final class UnidadeConversor {
-    static BigDecimal paraGramas(BigDecimal valor, String unidade) {
-        return switch (unidade.toLowerCase()) {
-            case "g"   -> valor;
-            case "mg"  -> valor.divide(BigDecimal.valueOf(1000), 6, RoundingMode.HALF_UP);
-            case "kg"  -> valor.multiply(BigDecimal.valueOf(1000));
-            case "ppm" -> valor.divide(BigDecimal.valueOf(10_000), 6, RoundingMode.HALF_UP); // simplificado
-            default -> throw new IllegalArgumentException("Unidade não suportada: " + unidade);
-        };
-    }
-}
-```
+classDiagram
+  direction LR
 
-### 3.7.4.4 Ports (repositórios)
+  %% Componente: Controle de Qualidade (simplificado)
 
-```java
+  class ServicoQualidade {
+    +registrarTeste(loteId, dados) TesteQualidade
+    +calcularPureza(testeId) NivelPureza
+    +emitirCertificado(loteId) CertificadoOrigem
+  }
 
-  public interface LoteRepository {
-    Optional<Lote> findByCodigo(String codigo);
-}
+  class Lote {
+    +id
+    +tipoMineral: TipoMineral
+    +dataExtracao
+    +adicionarTeste(t: TesteQualidade) void
+  }
 
-public interface TesteQualidadeRepository {
-    TesteQualidade save(TesteQualidade teste);
-    Optional<TesteQualidade> findById(UUID id);
-    Optional<TesteQualidade> findByCodigoLote(String codigoLote);
-}
+  class TesteQualidade {
+    +id
+    +loteId
+    +responsavelId
+    +data
+    +peso
+    +volume
+    +resultado: float
+  }
 
-public interface CertificadoRepository {
-    Certificado save(Certificado certificado);
-    Optional<Certificado> findByCodigoLote(String codigoLote);
-}
-```
+  class TabelaPadroes {
+    +obterNivel(tipo: TipoMineral, valor: float) : NivelPureza
+  }
 
-### 3.7.4.5 Implementação do Service (exemplo: Registrar Teste de Qualidade)
+  class CertificadoOrigem {
+    +id
+    +loteId
+    +nivel: NivelPureza
+  }
 
-```java
+  class IRepositorioLotes {
+    <<interface>>
+    +buscarPorId(id) : Lote
+    +salvar(lote) : bool
+  }
 
-  @Service
-@RequiredArgsConstructor
-public class QualidadeServiceImpl implements QualidadeService {
+  class IRepositorioTestes {
+    <<interface>>
+    +salvar(teste) : bool
+    +buscarPorLote(loteId) : TesteQualidade[]
+  }
 
-    private final LoteRepository loteRepo;
-    private final TesteQualidadeRepository testeRepo;
-    private final CertificadoRepository certRepo;
-    private final QualidadeMapper mapper;
-    private final Clock clock;
-    private final TransactionalExecutor tx;
-    private final IdempotencyGuard idempotency;
+  class TipoMineral {
+    <<enumeration>>
+    OURO
+    ZINCO
+    DOLOMITO
+    CASITERITA
+  }
 
-    @Override
-    public CertificadoDTO registrarTeste(DadosTesteDTO dados) {
-        // Idempotência por (lote + dataColeta + responsável)
-        String key = "qualidade:registrar:" + dados.codigoLote() + ":" + dados.dataColeta() + ":" + dados.responsavelColeta();
-        return idempotency.run(key, () -> tx.required(() -> registrarFluxo(dados)));
-    }
+  class NivelPureza {
+    <<enumeration>>
+    BAIXO
+    MEDIO
+    ALTO
+    PREMIUM
+  }
 
-    private CertificadoDTO registrarFluxo(DadosTesteDTO dados) {
-        // 1) Lote deve existir
-        Lote lote = loteRepo.findByCodigo(dados.codigoLote())
-            .orElseThrow(() -> new RecursoNaoEncontradoException("Lote não encontrado: " + dados.codigoLote()));
+  %% Relações
+  ServicoQualidade --> IRepositorioLotes : usa
+  ServicoQualidade --> IRepositorioTestes : usa
+  ServicoQualidade --> TabelaPadroes : consulta
+  ServicoQualidade ..> Lote : manipula
 
-        // 2) Validações de regra (domínio)
-        RegraAmostragem.validar(lote, dados.dataColeta());
-
-        // 3) Cálculo e classificação
-        BigDecimal pureza = CalculoPurezaPolicy.calcularPurezaPercentual(
-            dados.massaAmostra(), dados.massaSoluto(), dados.unidadeMedida());
-        double p = pureza.setScale(2, RoundingMode.HALF_UP).doubleValue();
-        TabelaPureza classe = TabelaPureza.classificar(p);
-        String status = classe.statusDefault();
-
-        // 4) Persistir Teste
-        TesteQualidade teste = TesteQualidade.novo(
-            lote.getCodigo(), dados.metodoAnalitico(), dados.responsavelColeta(), dados.dataColeta(), pureza);
-        teste = testeRepo.save(teste);
-
-        // 5) Emitir Certificado
-        Certificado cert = Certificado.emitir(
-            teste.getId(), lote.getCodigo(), pureza, classe.name(), status, clock.now(), "SGOM");
-        cert = certRepo.save(cert);
-
-        // 6) Evento de domínio
-        TesteQualidadeRegistrado evento = new TesteQualidadeRegistrado(teste.getId(), lote.getCodigo(), pureza);
-        evento.publicar();
-
-        // 7) Retorno
-        return mapper.toDTO(cert);
-    }
-
-    @Override
-    public CertificadoDTO reprocessarCalculo(UUID idTeste) {
-        return tx.required(() -> {
-            TesteQualidade teste = testeRepo.findById(idTeste)
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Teste não encontrado: " + idTeste));
-
-            BigDecimal pureza = CalculoPurezaPolicy.calcularPurezaPercentual(
-                teste.getMassaAmostra(), teste.getMassaSoluto(), teste.getUnidadeMedida());
-
-            double p = pureza.setScale(2, RoundingMode.HALF_UP).doubleValue();
-            TabelaPureza classe = TabelaPureza.classificar(p);
-            String status = classe.statusDefault();
-
-            Certificado cert = certRepo.findByCodigoLote(teste.getCodigoLote())
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Certificado não encontrado para lote: " + teste.getCodigoLote()));
-
-            cert.atualizar(pureza, classe.name(), status, clock.now(), "REPROCESS");
-            cert = certRepo.save(cert);
-            return mapper.toDTO(cert);
-        });
-    }
-
-    @Override
-    public Optional<CertificadoDTO> consultarCertificadoPorLote(String codigoLote) {
-        return certRepo.findByCodigoLote(codigoLote).map(mapper::toDTO);
-    }
-}
-```
-
-### 3.7.4.6 Exceções e Mapper
-
-- Exceções de negócio:
-  
-```java
-
-  public class NegocioException extends RuntimeException { public NegocioException(String msg) { super(msg); } }
-public class RecursoNaoEncontradoException extends RuntimeException { public RecursoNaoEncontradoException(String msg) { super(msg); } }
-public class ViolacaoRegraException extends NegocioException { public ViolacaoRegraException(String msg) { super(msg); } }
-```
-
-- Mapper (Domínio → DTO):
-
-```java
-
-  @Component
-public class QualidadeMapper {
-    public CertificadoDTO toDTO(Certificado cert) {
-        return new CertificadoDTO(
-            cert.getId(), cert.getCodigoLote(),
-            cert.getPurezaPercentual().setScale(2, RoundingMode.HALF_UP),
-            cert.getClassePureza(), cert.getStatus(),
-            cert.getEmitidoEm(), cert.getEmitidoPor()
-        );
-    }
-}
-```
-
-### 3.7.4.7 Testes (esqueleto)
-
-```java
-
-  @ExtendWith(SpringExtension.class)
-class QualidadeServiceImplTest {
-
-    @Mock LoteRepository loteRepo;
-    @Mock TesteQualidadeRepository testeRepo;
-    @Mock CertificadoRepository certRepo;
-    @Mock QualidadeMapper mapper;
-    @Mock Clock clock;
-    @Mock TransactionalExecutor tx;
-    @Mock IdempotencyGuard idempotency;
-
-    @InjectMocks QualidadeServiceImpl service;
-
-    @Test
-    void deveRegistrarTesteComSucesso() {
-        // arrange: mocks de lote, save, clock...
-        // act: service.registrarTeste(dados)
-        // assert: verificações de persistência e retorno do DTO
-    }
-}
-
+  Lote "1" o-- "*" TesteQualidade : compõe
+  Lote --> TipoMineral
+  CertificadoOrigem --> NivelPureza
+    
 ```
 
 ## -[4. Histórias de usuário](#4-histórias-de-usuário)
@@ -2122,8 +1955,80 @@ Fonte de Informação: Baseie toda a narrativa da jornada no contexto e nas oper
 | Análise e Correlação Climática | Consulta dashboard relacionando dados meteorológicos (ex.: pluviometria) com resultados de qualidade e produção do dia/área. | “A chuva afetou a pureza?” | Correlações manuais demoradas; dados climáticos fora de contexto. | Gráficos de correlação por área/minério/período; insights automáticos (ex.: “redução de pureza em dias com >X mm de chuva”). |
 | Finalização e Auditoria | Revisa a trilha completa (lotes, testes, selos, cofre, certificados, documentos anexos); garante que tudo está pronto para auditorias. | “Consigo reconstruir o histórico do lote de ponta a ponta.” | Documentos espalhados; dificuldade em localizar evidências rapidamente. | Linha do tempo do lote (do campo ao certificado); busca unificada por código de lote/área/data; exportação de dossiê do lote em PDF. |
 
+## - [5. Protótipo de telas](#5-protótipo-de-telas)
+<!-- 
+Gere um protótipo de tela moderna e responsiva no estilo de painel administrativo (como o exemplo enviado), utilizando um layout em tons de cinza e azul, com botões no topo para ações CRUD (Pesquisar, Salvar, Imprimir, Deletar, Editar e Sair), e campos de formulário abaixo com rótulos e caixas de texto.
 
-## - [3.8. Codigo SQL](#32-Codigo-sql)
+O tema da tela deve estar alinhado ao sistema SGOM – Sistema de Gerenciamento de Operações de Mineração (MineraX), conforme a descrição detalhada da empresa mineradora a seguir:
+
+A empresa explora ouro, casiterita, dolomito e zinco.
+
+Cada jazida e área de extração possui coordenadas, produção diária e registros de atividades.
+
+Há cadastros de equipamentos, funcionários, veículos, fauna, flora, laudos, e registros de qualidade dos minérios.
+
+O sistema também armazena dados meteorológicos e associa com a produção.
+
+Cada lote extraído possui um código, peso, volume, pureza e responsável técnico.
+
+Objetivo do protótipo: Criar uma tela de “Cadastro de Lote de Produção”, inspirada visualmente no modelo da imagem (cadastro de pets), mas com campos relacionados à mineração.
+
+Componentes esperados:
+
+Cabeçalho: “Cadastro de Lote de Produção”
+
+Botões no topo: 🔍 Pesquisar | 💾 Salvar | 🖨️ Imprimir | 🗑️ Deletar | ✏️ Editar | ↩️ Sair
+
+Campos de formulário:
+
+ID do Lote
+
+Código da Área de Extração
+
+Tipo de Minério (ex: Ouro, Zinco, Dolomito, Casiterita)
+
+Peso (kg)
+
+Volume (m³)
+
+Nível de Pureza (%)
+
+Responsável Técnico
+
+Data da Extração
+
+Data de Teste de Qualidade
+
+Valor de Mercado (na data do registro)
+
+Requisitos de estilo e interação:
+
+Layout centralizado, limpo e com bordas suaves (inspirado em painéis administrativos).
+
+Rótulos alinhados à esquerda, caixas de texto largas e espaçadas.
+
+Ícones nos botões (usar ícones padrão ou FontAwesome).
+
+Tema responsivo para desktop e tablet.
+
+Inserir um painel inferior com status da operação (ex: “Lote salvo com sucesso”, “Erro ao validar dados”).
+
+Extras:
+
+Se possível, adicione uma seção colapsável chamada “Dados de Qualidade”, com campos adicionais:
+
+Laboratório Responsável
+
+Resultado do Teste (texto)
+
+Certificado de Origem (upload PDF)
+
+O protótipo deve refletir o ambiente de um sistema corporativo de mineração, com foco em controle, registro e rastreabilidade da produção mineral.
+-->
+
+
+
+## - [10. Codigo SQL](#32-Codigo-sql)
 
 <!-- >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
  >> Crie um prompt para que o diagrama de classe vire comandos CREATE TABLE e coloque nos anexos! No final deste documento. -->
