@@ -56,7 +56,6 @@ Estudo Dirigido - Engenharia de Software
   - [5. Protótipo de telas](#5-protótipo-de-telas)
   - [6. Diagrama de navegação de tela](#6-diagrama-de-navegação-de-tela)
   - [10. Anexos](#10-anexos)
-  - [10.1 Codigo SQL](#101-codigo-sql)
 
 
 ## [1. Introdução](#1-introdução)
@@ -2101,8 +2100,8 @@ Instruções para o gerador:
 
 ![Diagrama De Navegação](Arquivos/Diagrama_de_navegacao.png)
 
-## [10. Anexos](#--10-anexos)
-## [10.1 Codigo SQL](#32-Codigo-sql)
+##  [10. Anexos](#--10-anexos)
+ [10.1 Codigo SQL](#32-Codigo-sql)
 
 <!-- >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
  >> Crie um prompt para que o diagrama de classe vire comandos CREATE TABLE e coloque nos anexos! No final deste documento. -->
