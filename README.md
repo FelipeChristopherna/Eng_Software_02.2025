@@ -2,25 +2,25 @@
 Estudo Dirigido - Engenharia de Software
 
 - [Eng\_Software\_02.2025](#eng_software_022025)
-  - [- 1. Introdução](#--1-introdução)
-  - [- 2. Descrição](#--2-descrição)
+  - [1. Introdução](#1-introdução)
+  - [2. Descrição](#2-descrição)
   - [Requisitos do Sistema de Gerenciamento de Operações de Mineração (SGOM)](#requisitos-do-sistema-de-gerenciamento-de-operações-de-mineração-sgom)
-  - [- 2.2. Funcionais e não-funcionais](#--22-funcionais-e-não-funcionais)
+  - [2.2. Funcionais e não-funcionais](#22-funcionais-e-não-funcionais)
   - [Requisitos do Sistema de Gerenciamento de Operações de Mineração (SGOM)](#requisitos-do-sistema-de-gerenciamento-de-operações-de-mineração-sgom-1)
-- [- 3.0. Diagramas](#--30-diagramas)
-  - [- 3.1. Diagrama de classe](#--31-diagrama-de-classe)
-  - [- 3.2. Diagrama ER](#--32-diagrama-er)
-  - [- 3.3. Diagrama de casos de uso](#--33-diagrama-de-casos-de-uso)
+- [3.0. Diagramas](#30-diagramas)
+  - [3.1. Diagrama de classe](#31-diagrama-de-classe)
+  - [3.2. Diagrama ER](#32-diagrama-er)
+  - [3.3. Diagrama de casos de uso](#33-diagrama-de-casos-de-uso)
   - [Diagrama De Caso de uso (SGOM)](#diagrama-de-caso-de-uso-sgom)
-  - [- 3.4. Diagrama de atividade](#--34-diagrama-de-atividade)
-  - [- 3.5. Diagrama de Componentes](#--35-diagrama-de-componentes)
-  - [- 3.6. Diagrama de implantação](#--36-diagrama-de-implantação)
+  - [3.4. Diagrama de atividade](#34-diagrama-de-atividade)
+  - [3.5. Diagrama de Componentes](#35-diagrama-de-componentes)
+  - [3.6. Diagrama de implantação](#36-diagrama-de-implantação)
 - [3.7. Diagramas C4](#37-diagramas-c4)
-  - [-3.7.1. Diagrama C4 de contexto.](#-371-diagrama-c4-de-contexto)
-  - [-3.7.2. Diagrama C4 de contêiner.](#-372-diagrama-c4-de-contêiner)
-  - [-3.7.3. Diagrama C4 de componente.](#-373-diagrama-c4-de-componente)
-  - [-3.7.4. Diagrama C4 de código.](#-374-diagrama-c4-de-código)
-  - [-4. Histórias de usuário](#-4-histórias-de-usuário)
+  - [3.7.1. Diagrama C4 de contexto.](#371-diagrama-c4-de-contexto)
+  - [3.7.2. Diagrama C4 de contêiner.](#372-diagrama-c4-de-contêiner)
+  - [3.7.3. Diagrama C4 de componente.](#373-diagrama-c4-de-componente)
+  - [3.7.4. Diagrama C4 de código.](#374-diagrama-c4-de-código)
+  - [4. Histórias de usuário](#4-histórias-de-usuário)
 - [Backlog do Sistema de Gerenciamento de Operações de Mineração (SGOM)](#backlog-do-sistema-de-gerenciamento-de-operações-de-mineração-sgom)
   - [Épico 1: Gestão de Áreas e Jazidas](#épico-1-gestão-de-áreas-e-jazidas)
     - [Feature 1.1: Cadastro de Áreas e Jazidas](#feature-11-cadastro-de-áreas-e-jazidas)
@@ -51,14 +51,15 @@ Estudo Dirigido - Engenharia de Software
     - [Feature 10.2: Auditoria Operacional](#feature-102-auditoria-operacional)
   - [Épico 11: Subprodutos da Mineração](#épico-11-subprodutos-da-mineração)
     - [Feature 11.1: Registro de Areia e Cascalho](#feature-111-registro-de-areia-e-cascalho)
-- [- 4.1. Jornada do usuário](#--41-jornada-do-usuário)
+- [4.1. Jornada do usuário](#41-jornada-do-usuário)
 - [Jornada do Usuário — Persona: Técnico de Qualidade](#jornada-do-usuário--persona-técnico-de-qualidade)
-  - [- 5. Protótipo de telas](#--5-protótipo-de-telas)
-  - [- 6. Diagrama de navegação de tela](#--6-diagrama-de-navegação-de-tela)
-  - [- 10. Codigo SQL](#--10-codigo-sql)
+  - [5. Protótipo de telas](#5-protótipo-de-telas)
+  - [6. Diagrama de navegação de tela](#6-diagrama-de-navegação-de-tela)
+  - [10. Anexos](#10-anexos)
+  - [10.1 Codigo SQL](#101-codigo-sql)
 
 
-## - [1. Introdução](#1-introdução)
+## [1. Introdução](#1-introdução)
 <!-- >>> Descrever a necessidade de um sistema nessa área em até 2 ou 3 parágrafos. -->
 
 <!--  Função/Persona: Você é um consultor especialista em sistemas de gestão para a   indústria de mineração. Sua tarefa é redigir a introdução de uma proposta de projeto para o desenvolvimento de um Sistema de Gerenciamento de Operações de Mineração (SGOM). 
@@ -69,8 +70,8 @@ As operações de mineração apresentam uma complexidade única, resultado da d
 
 Diante desse cenário, a implementação de um Sistema de Gerenciamento de Operações de Mineração (SGOM) surge como uma solução estratégica para unificar e correlacionar informações críticas. Um sistema integrado permitirá consolidar registros operacionais, ambientais e administrativos em uma única plataforma, assegurando maior segurança da informação e facilitando auditorias internas e externas. Além disso, a capacidade de relacionar dados de produção com variáveis climáticas e ambientais proporcionará análises preditivas e decisões mais assertivas, promovendo ganhos em eficiência, redução de riscos e otimização de recursos, fortalecendo assim a competitividade e a sustentabilidade da mineradora.
 
-## - [2. Descrição](#2-descrição)
-  - [2.1. Requisitos.](#21-requisitos)
+##  [2. Descrição](#2-descrição)
+[2.1. Requisitos.](#21-requisitos)
 <!-- >> Colocar aqui a lista acima! -->
 
 <!-- 
@@ -162,7 +163,7 @@ Exemplo: - [ ] O sistema deve suportar o upload, armazenamento e visualização 
 | RNF009 | Requisitos Não Funcionais                | O sistema deve manter compatibilidade com auditorias, permitindo exportação de registros em formatos padrão. |
 | RNF010 | Requisitos Não Funcionais                | O sistema deve permitir integração futura com ferramentas de análise de dados e inteligência artificial. |
 
-##  - [2.2. Funcionais e não-funcionais](#22-funcionais-e-não-funcionais)
+## [2.2. Funcionais e não-funcionais](#22-funcionais-e-não-funcionais)
 <!-- >> via prompt, separar os requisitos por tipo (funcional e não funcional), colocar aqui em forma de tabela markdown -->
 <!-- 
 Objetivo: Pegar uma lista mista de requisitos de sistema (já elaborada) para o SGOM e classificá-la de forma clara e distinta em duas categorias: Requisitos Funcionais e Requisitos Não Funcionais. O resultado final deve ser um documento Markdown limpo e bem estruturado.
@@ -243,9 +244,9 @@ Resultado Esperado: Um único documento Markdown contendo todos os requisitos or
 | RNF009 | Não Funcional        | O sistema deve manter compatibilidade com auditorias, permitindo exportação de registros em formatos padrão. |
 | RNF010 | Não Funcional        | O sistema deve permitir integração futura com ferramentas de análise de dados e inteligência artificial. |
 
-# - [3.0. Diagramas](#3-diagramas)
+# [3.0. Diagramas](#3-diagramas)
 
-## - [3.1. Diagrama de classe](#3.1-diagrama-de-classe)
+## [3.1. Diagrama de classe](#3.1-diagrama-de-classe)
 <!-- >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid. -->
 
 <!-- 
@@ -597,7 +598,7 @@ Area "0..*" --> "0..*" Camera
 Camera "1" *-- "0..*" Midia
 ```
 
-## - [3.2. Diagrama ER](#32-diagrama-er)
+## [3.2. Diagrama ER](#32-diagrama-er)
 <!-- >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid. -->
 
 <!-- 
@@ -902,7 +903,7 @@ erDiagram
 ```
 
 
-## - [3.3. Diagrama de casos de uso](#33-diagrama-de-casos-de-uso)
+## [3.3. Diagrama de casos de uso](#33-diagrama-de-casos-de-uso)
 <!-- >> Crie um prompt para os casos de uso com PlantUML -->
 
   ## Diagrama De Caso de uso (SGOM)
@@ -1099,7 +1100,7 @@ UC_BaixarEvid ..> UC_Consultar : <<include>>
 @enduml
 
 -->
-## - [3.4. Diagrama de atividade](#33-diagrama-de-atividade)
+## [3.4. Diagrama de atividade](#33-diagrama-de-atividade)
 <!-- >> Crie um prompt para esta seção 
 Função/Persona: Analista de Processos de Negócio.
 
@@ -1179,7 +1180,7 @@ DQ -- Sim --> CQ3 --> CQ4 --> CQ5 --> EN1
 EN1 --> EN2 --> LG1 --> LG2 --> LG3 --> LG4 --> END
 ```
 
-##  - [3.5. Diagrama de Componentes](#34-diagrama-de-componentes)
+## [3.5. Diagrama de Componentes](#34-diagrama-de-componentes)
 <!-- >>> Crie um prompt para esta seção -->
 
 <!-- 
@@ -1297,7 +1298,7 @@ graph TD
 
 ```
 
-##  - [3.6. Diagrama de implantação](#35-diagrama-de-implantação)
+## [3.6. Diagrama de implantação](#35-diagrama-de-implantação)
 <!-- >> Crie um prompt para esta seção -->
 
 <!-- 
@@ -1407,7 +1408,7 @@ graph LR
 # [3.7. Diagramas C4](#36-diagramas-c4)
 <!-- Crie um prompt para esta seção para os 4 tipos de diagramas C4 -->
 
-## -[3.7.1. Diagrama C4 de contexto.](#361-diagrama-c4-de-contexto)
+## [3.7.1. Diagrama C4 de contexto.](#361-diagrama-c4-de-contexto)
 <!-- 
     Função/Persona: Arquiteto de Software.
 
@@ -1474,7 +1475,7 @@ Relações: Use setas para mostrar as interações, adicionando um breve descrit
   SGOM  -- "Envia relatórios e dados regulatórios para" --> ANM
   ```
 
-## -[3.7.2. Diagrama C4 de contêiner.](#362-diagrama-c4-de-contêiner)
+## [3.7.2. Diagrama C4 de contêiner.](#362-diagrama-c4-de-contêiner)
 <!-- 
     Função/Persona: Arquiteto de Software.
 
@@ -1557,7 +1558,7 @@ graph LR
   API   -- "HTTPS · Relatórios e dados regulatórios" --> ANM
 ```
 
-## -[3.7.3. Diagrama C4 de componente.](#363-diagrama-c4-de-componente)
+## [3.7.3. Diagrama C4 de componente.](#363-diagrama-c4-de-componente)
 <!-- 
   Função/Persona: Arquiteto de Software.
 
@@ -1648,7 +1649,7 @@ Relações: Mostre o fluxo de uma requisição, por exemplo, da Aplicação Web 
   RepoAmb  -- "JDBC/ORM" --> DB
 ```
 
-## -[3.7.4. Diagrama C4 de código.](#364-diagrama-c4-de-código)
+## [3.7.4. Diagrama C4 de código.](#364-diagrama-c4-de-código)
 <!-- 
   Função/Persona: Arquiteto de Software / Desenvolvedor Sênior.
 
@@ -1771,7 +1772,7 @@ classDiagram
     
 ```
 
-## -[4. Histórias de usuário](#4-histórias-de-usuário)
+## [4. Histórias de usuário](#4-histórias-de-usuário)
 
 <!-- 
 Função/Persona: Analista de Requisitos.
@@ -1915,7 +1916,7 @@ Fonte dos Requisitos: Baseie-se exclusivamente na descrição detalhada da empre
 - O SGOM deverá ser multiusuário, com controle de acesso baseado em perfis (operador, engenheiro, gestor, auditor, administrador).
 
 
-# - [4.1. Jornada do usuário](#42-jornada-do-usuário)
+# [4.1. Jornada do usuário](#42-jornada-do-usuário)
 <!-- 
   Função/Persona: UX Designer / Product Manager.
 
@@ -1956,7 +1957,7 @@ Fonte de Informação: Baseie toda a narrativa da jornada no contexto e nas oper
 | Análise e Correlação Climática | Consulta dashboard relacionando dados meteorológicos (ex.: pluviometria) com resultados de qualidade e produção do dia/área. | “A chuva afetou a pureza?” | Correlações manuais demoradas; dados climáticos fora de contexto. | Gráficos de correlação por área/minério/período; insights automáticos (ex.: “redução de pureza em dias com >X mm de chuva”). |
 | Finalização e Auditoria | Revisa a trilha completa (lotes, testes, selos, cofre, certificados, documentos anexos); garante que tudo está pronto para auditorias. | “Consigo reconstruir o histórico do lote de ponta a ponta.” | Documentos espalhados; dificuldade em localizar evidências rapidamente. | Linha do tempo do lote (do campo ao certificado); busca unificada por código de lote/área/data; exportação de dossiê do lote em PDF. |
 
-## - [5. Protótipo de telas](#5-protótipo-de-telas)
+## [5. Protótipo de telas](#5-protótipo-de-telas)
 <!-- 
 Gere um protótipo de tela moderna e responsiva no estilo de painel administrativo (como o exemplo enviado), utilizando um layout em tons de cinza e azul, com botões no topo para ações CRUD (Pesquisar, Salvar, Imprimir, Deletar, Editar e Sair), e campos de formulário abaixo com rótulos e caixas de texto.
 
@@ -2028,7 +2029,7 @@ O protótipo deve refletir o ambiente de um sistema corporativo de mineração, 
 -->
 ![Protótipo de telas](Arquivos/Prototipo.crud.png)
 
-## - [6. Diagrama de navegação de tela](#6-diagrama-de-navegação-de-tela)
+## [6. Diagrama de navegação de tela](#6-diagrama-de-navegação-de-tela)
 
 <!-- 
 Crie um diagrama de navegação de telas mobile para o Sistema de Gestão de Operações de Mineração (SGOM). O objetivo é representar visualmente o fluxo de navegação entre as principais telas do aplicativo, no estilo do exemplo fornecido (smartphones conectados por setas de fluxo).
@@ -2100,7 +2101,8 @@ Instruções para o gerador:
 
 ![Diagrama De Navegação](Arquivos/Diagrama_de_navegacao.png)
 
-## - [10. Codigo SQL](#32-Codigo-sql)
+## [10. Anexos](#--10-anexos)
+## [10.1 Codigo SQL](#32-Codigo-sql)
 
 <!-- >> Crie um prompt para o diagrama de classe usando Markdown e Mermaid.
  >> Crie um prompt para que o diagrama de classe vire comandos CREATE TABLE e coloque nos anexos! No final deste documento. -->
