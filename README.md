@@ -55,6 +55,8 @@ Estudo Dirigido - Engenharia de Software
 - [Jornada do Usuário — Persona: Técnico de Qualidade](#jornada-do-usuário--persona-técnico-de-qualidade)
   - [5. Protótipo de telas](#5-protótipo-de-telas)
   - [6. Diagrama de navegação de tela](#6-diagrama-de-navegação-de-tela)
+  - [7. Pilha tecnológica](#7-pilha-tecnológica)
+  - [8. Cronograma, Gráfico de Gantt](#8-cronograma-gráfico-de-gantt)
   - [10. Anexos](#10-anexos)
 
 
@@ -2099,6 +2101,127 @@ Instruções para o gerador:
 -->
 
 ![Diagrama De Navegação](Arquivos/Diagrama_de_navegacao.png)
+
+## [7. Pilha tecnológica](#7-pilha-tecnológica)
+<!-- 
+Função/Persona: Arquiteto de Soluções / DevOps.
+
+Objetivo: Criar um Diagrama de Pilha Tecnológica para o SGOM, baseado no exemplo de arquitetura "Client/Server" fornecido. O diagrama deve detalhar as tecnologias, servidores e componentes, utilizando a sintaxe Mermaid.
+
+Instruções:
+
+Formato de Saída: A resposta deve ser um único bloco de código Markdown, formatado para Mermaid (```mermaid), utilizando um grafo (graph LR ou graph TD).
+
+Estrutura Principal: O diagrama deve ser dividido em duas áreas principais, usando subgraph:
+
+subgraph "Lado do Servidor (Server Side)"
+
+subgraph "Lado do Cliente (Client Side)"
+
+Lado do Cliente: Dentro deste subgraph, inclua os nós que representam o usuário final:
+
+[PC/Celular (Dispositivos dos Usuários)]
+
+[SO (Sistema Operacional)]
+
+[Browser (Cliente Web)]
+
+Crie um nó separado para as tecnologias: [Tecnologias Client: HTML5, CSS3, JavaScript, React/Vue]
+
+Lado do Servidor: Dentro deste subgraph, inclua os nós da infraestrutura:
+
+[Servidor Web (ex: Nginx)]
+
+[Servidor de Aplicação (Backend)]
+
+[Servidor de Banco de Dados]
+
+[BD (PostgreSQL/MySQL)]
+
+Crie nós separados para as tecnologias: [Tecnologias Backend: Node.js/Spring Boot, API REST], [Componentes da App (Serviços de Lavra, Qualidade, Ambiental)]
+
+Conexão: Use um nó [Web (Internet/Nuvem)] para conectar o "Lado do Cliente" ao "Lado do Servidor".
+
+Fluxo: As setas (->) devem mostrar o fluxo lógico: O Browser acessa a Web, que se conecta ao Servidor Web, que por sua vez se comunica com o Servidor de Aplicação e o Servidor de Banco de Dados.
+-->
+
+```mermaid
+
+graph LR
+    %% ======================
+    %% DIAGRAMA DE PILHA TECNOLÓGICA - SGOM
+    %% ======================
+
+    %% --- Lado do Cliente ---
+    subgraph "Lado do Cliente (Client Side)"
+        A1["PC/Celular (Dispositivos dos Usuários)"]
+        A2["SO (Sistema Operacional)"]
+        A3["Browser (Cliente Web)"]
+        A4["Tecnologias Client: HTML5, CSS3, JavaScript, React/Vue"]
+    end
+
+    %% --- Lado do Servidor ---
+    subgraph "Lado do Servidor (Server Side)"
+        B1["Servidor Web (ex: Nginx)"]
+        B2["Servidor de Aplicação (Backend)"]
+        B3["Servidor de Banco de Dados"]
+        B4["BD (PostgreSQL/MySQL)"]
+        B5["Tecnologias Backend: Node.js/Spring Boot, API REST"]
+        B6["Componentes da App: Lavra, Qualidade, Ambiental"]
+    end
+
+    %% --- Internet/Nuvem ---
+    C["Web (Internet/Nuvem)"]
+
+    %% --- Fluxo de comunicação ---
+    A1 --> A2 --> A3 --> A4 --> C --> B1 --> B2 --> B3 --> B4
+    B2 --> B5
+    B2 --> B6
+
+    %% --- Estilo visual ---
+    classDef client fill:#e0ffe0,stroke:#008000,stroke-width:1px,color:#000;
+    classDef server fill:#e0f0ff,stroke:#0044cc,stroke-width:1px,color:#000;
+    classDef cloud fill:#fff2cc,stroke:#cc9900,stroke-width:1px,color:#000;
+
+    class A1,A2,A3,A4 client;
+    class B1,B2,B3,B4,B5,B6 server;
+    class C cloud;
+```
+## [8. Cronograma, Gráfico de Gantt](#8-cronograma-gráfico-de-gantt)
+<!-- 
+
+
+-->
+
+```mermaid
+gantt
+    title Cronograma Simplificado - Projeto SGOM (Jul/2025 a Dez/2025)
+    dateFormat  YYYY-MM-DD
+    axisFormat  %b/%Y
+    %% Escala de tempo: Julho a Dezembro/2025
+
+    section Planejamento
+        Análise de Requisitos Preliminar          :a1, 2025-07-01, 2w
+        Projeto Básico                            :a2, after a1, 2w
+        Detalhamento do Projeto                   :a3, after a2, 2w
+
+    section Modelagem de Dados
+        Projeto de Banco de Dados                 :b1, after a3, 3w
+        Popular o BD (com dados de teste)         :b2, after b1, 2w
+
+    section UI/UX
+        Prototipação de Telas                     :c1, after b2, 3w
+
+    section Desenvolvimento
+        Desenvolvimento Módulo Core (Lavra e Cadastro)   :d1, after c1, 4w
+        Desenvolvimento Módulos Ambiental e Qualidade    :d2, after d1, 4w
+
+    section Testes e Entrega
+        Testes e Homologação                     :e1, after d2, 3w
+        Deploy Final e Instalação                :e2, after e1, 2w
+
+
+```
 
 ##  [10. Anexos](#--10-anexos)
  [10.1 Codigo SQL](#32-Codigo-sql)
