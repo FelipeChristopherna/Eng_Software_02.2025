@@ -54,6 +54,7 @@ Estudo Dirigido - Engenharia de Software
 - [- 4.1. Jornada do usuário](#--41-jornada-do-usuário)
 - [Jornada do Usuário — Persona: Técnico de Qualidade](#jornada-do-usuário--persona-técnico-de-qualidade)
   - [- 5. Protótipo de telas](#--5-protótipo-de-telas)
+  - [- 6. Diagrama de navegação de tela](#--6-diagrama-de-navegação-de-tela)
   - [- 10. Codigo SQL](#--10-codigo-sql)
 
 
@@ -2027,6 +2028,77 @@ O protótipo deve refletir o ambiente de um sistema corporativo de mineração, 
 -->
 ![Protótipo de telas](Arquivos/Prototipo.crud.png)
 
+## - [6. Diagrama de navegação de tela](#6-diagrama-de-navegação-de-tela)
+
+<!-- 
+Crie um diagrama de navegação de telas mobile para o Sistema de Gestão de Operações de Mineração (SGOM). O objetivo é representar visualmente o fluxo de navegação entre as principais telas do aplicativo, no estilo do exemplo fornecido (smartphones conectados por setas de fluxo).
+
+Estilo desejado:
+
+Layout vertical com setas conectando as telas.
+
+Cada tela deve ter o mockup de interface simplificado (botões, campos e rótulos).
+
+Utilize estilo minimalista, com cores neutras (tons de azul e cinza claro).
+
+Utilize ícones simples para indicar ações como login, voltar, enviar, menu, etc.
+
+Fluxo principal:
+
+Tela de Login
+
+Campos: Usuário, Senha
+
+Botão: “Entrar”
+
+Link: “Esqueci minha senha” ➜ Redireciona para Dashboard Principal
+
+Dashboard Principal (Menu Inicial)
+
+Botões:
+
+Cadastro de Áreas
+
+Operações de Lavra
+
+Qualidade
+
+Expedição
+
+Relatórios ➜ Cada botão leva à respectiva tela abaixo.
+
+Tela de Cadastro de Áreas
+
+Campos: Nome da Área, Coordenadas, Tipo (Extração / Reserva / Pátio)
+
+Botão: “Salvar” ➜ Retorna ao Dashboard.
+
+Tela de Operações de Lavra
+
+Lista de atividades (Prospecção, Extração, Filtragem, Pesagem)
+
+Botão “Registrar Atividade” ➜ Abre formulário de registro (Data, Hora, Responsável, Lote)
+
+Tela de Teste de Qualidade
+
+Campos: Código da Área, Peso, Volume, Pureza
+
+Botão: “Gerar Selo” ➜ Retorna ao Dashboard.
+
+Tela de Relatórios
+
+Botões: Produção Diária / Clima / Qualidade ➜ Cada um abre uma tela com gráficos ou PDF.
+
+Tela de Configurações (opcional)
+
+Perfil, Permissões, Idioma.
+
+Instruções para o gerador:
+
+“Desenhe as telas em smartphones verticais conectadas por linhas azuis representando a navegação. O fluxo deve partir do Login e retornar sempre ao Dashboard, no mesmo formato do exemplo mostrado.”
+-->
+
+![Diagrama De Navegação](Arquivos/Diagrama_de_navegacao.png)
 
 ## - [10. Codigo SQL](#32-Codigo-sql)
 
