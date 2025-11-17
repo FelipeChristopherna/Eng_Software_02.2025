@@ -2195,30 +2195,32 @@ graph LR
 
 ```mermaid
 gantt
-    title Cronograma Simplificado - Projeto SGOM (Jul/2025 a Dez/2025)
+    title Cronograma de Implementação - Projeto SGOM
     dateFormat  YYYY-MM-DD
     axisFormat  %b/%Y
-    %% Escala de tempo: Julho a Dezembro/2025
 
     section Planejamento
-        Análise de Requisitos Preliminar          :a1, 2025-07-01, 2w
-        Projeto Básico                            :a2, after a1, 2w
-        Detalhamento do Projeto                   :a3, after a2, 2w
+    Análise de Requisitos Preliminar       :a1, 2025-01-06, 3w
+    Detalhamento do Projeto (Design e Arquitetura C4)  :a2, after a1, 3w
 
     section Modelagem de Dados
-        Projeto de Banco de Dados                 :b1, after a3, 3w
-        Popular o BD (com dados de teste)         :b2, after b1, 2w
+    Projeto de BD (Diagrama ER e Scripts SQL)          :b1, after a2, 2w
+    Popular o BD (com dados de teste)                  :b2, after b1, 2w
 
     section UI/UX
-        Prototipação de Telas                     :c1, after b2, 3w
+    Prototipação de Telas (Wireframes e Mockups)       :c1, after b2, 3w
 
     section Desenvolvimento
-        Desenvolvimento Módulo Core (Lavra e Cadastro)   :d1, after c1, 4w
-        Desenvolvimento Módulos Ambiental e Qualidade    :d2, after d1, 4w
+    Sprint 1 - Módulos Core (Operações de Lavra, Cadastro) :d1, after c1, 4w
+    Sprint 2 - Módulos Ambiental e Qualidade               :d2, after d1, 4w
 
-    section Testes e Entrega
-        Testes e Homologação                     :e1, after d2, 3w
-        Deploy Final e Instalação                :e2, after e1, 2w
+    section Testes e Homologação
+    Testes Unitários e de Integração                  :e1, after d2, 2w
+    Homologação e Validação com Usuários              :e2, after e1, 2w
+
+    section Entrega e Encerramento
+    Deploy Final e Treinamento de Usuários            :f1, after e2, 2w
+    Instalação e Encerramento do Projeto              :f2, after f1, 1w
 
 
 ```
